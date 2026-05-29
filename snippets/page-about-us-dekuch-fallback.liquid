@@ -23,6 +23,18 @@
   capture response_time
     render 'store-contact-meta', field: 'response_time'
   endcapture
+  capture privacy_policy_url
+    render 'store-policy-url', policy: 'privacy-policy', fallback: '/policies/privacy-policy'
+  endcapture
+  capture refund_policy_url
+    render 'store-policy-url', policy: 'refund-policy', fallback: '/policies/refund-policy'
+  endcapture
+  capture shipping_policy_url
+    render 'store-policy-url', policy: 'shipping-policy', fallback: '/policies/shipping-policy'
+  endcapture
+  capture terms_policy_url
+    render 'store-policy-url', policy: 'terms-of-service', fallback: '/policies/terms-of-service'
+  endcapture
 -%}
 
 <div class="about-dekuch">
@@ -61,6 +73,8 @@
         src="https://cdn.shopify.com/s/files/1/0875/5622/7378/files/About_Us_Dekuch.png?v=1742019550"
         alt="Dekuch brand introduction"
         loading="lazy"
+        width="1366"
+        height="768"
       >
     </div>
   </section>
@@ -90,19 +104,19 @@
       </div>
 
       <div class="about-dekuch__links">
-        <a class="about-dekuch__link-card" href="/policies/shipping-policy">
+        <a class="about-dekuch__link-card" href="{{ shipping_policy_url | strip }}">
           <span class="about-dekuch__mini-title">Shipping Policy</span>
           <span class="about-dekuch__mini-copy">Processing times, delivery expectations, and fulfillment details.</span>
         </a>
-        <a class="about-dekuch__link-card" href="/policies/refund-policy">
+        <a class="about-dekuch__link-card" href="{{ refund_policy_url | strip }}">
           <span class="about-dekuch__mini-title">Refund Policy</span>
           <span class="about-dekuch__mini-copy">How returns work, timelines, and what to expect after a request.</span>
         </a>
-        <a class="about-dekuch__link-card" href="/policies/privacy-policy">
+        <a class="about-dekuch__link-card" href="{{ privacy_policy_url | strip }}">
           <span class="about-dekuch__mini-title">Privacy Policy</span>
           <span class="about-dekuch__mini-copy">How customer information is handled on Dekuch.</span>
         </a>
-        <a class="about-dekuch__link-card" href="/policies/terms-of-service">
+        <a class="about-dekuch__link-card" href="{{ terms_policy_url | strip }}">
           <span class="about-dekuch__mini-title">Terms of Service</span>
           <span class="about-dekuch__mini-copy">Order, payment, and site-use terms in one place.</span>
         </a>

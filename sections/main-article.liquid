@@ -118,7 +118,7 @@
                 <div class="dekuch-article__rail-links">
                   {%- assign linked_posts = 0 -%}
                   {%- for related_article in blog.articles -%}
-                    {%- if related_article.handle != article.handle and linked_posts < 4 -%}
+                    {%- if related_article.handle != article.handle -%}
                       <a href="{{ related_article.url }}">
                         <span class="dekuch-article__rail-link-thumb">
                           {%- if related_article.image -%}
@@ -141,6 +141,9 @@
                         </span>
                       </a>
                       {%- assign linked_posts = linked_posts | plus: 1 -%}
+                      {%- if linked_posts >= 4 -%}
+                        {%- break -%}
+                      {%- endif -%}
                     {%- endif -%}
                   {%- endfor -%}
                 </div>
@@ -175,6 +178,9 @@
                         </div>
                       </article>
                       {%- assign sidebar_products_rendered = sidebar_products_rendered | plus: 1 -%}
+                      {%- if sidebar_products_rendered >= sidebar_product_limit -%}
+                        {%- break -%}
+                      {%- endif -%}
                     {%- endif -%}
                   {%- endfor -%}
                 </div>
@@ -265,6 +271,9 @@
               </div>
             </article>
             {%- assign bottom_products_rendered = bottom_products_rendered | plus: 1 -%}
+            {%- if bottom_products_rendered >= bottom_product_limit -%}
+              {%- break -%}
+            {%- endif -%}
           {%- endif -%}
         {%- endfor -%}
       </div>
@@ -277,7 +286,7 @@
         class="page-width{% if is_trending_now_article %} dekuch-article__page-width dekuch-article__comments-shell{% else %} page-width--narrow{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
       >
         {%- if article.comments_count > 0 -%}
-          {%- assign anchorId = '#Comments-' | append: article.id -%}
+          {%- assign anchor_id = '#Comments-' | append: article.id -%}
 
           <h2 id="Comments-{{ article.id }}" tabindex="-1">
             {{ 'blogs.article.comments' | t: count: article.comments_count }}
@@ -304,7 +313,7 @@
                   </footer>
                 </article>
               {%- endfor -%}
-              {% render 'pagination', paginate: paginate, anchor: anchorId %}
+              {% render 'pagination', paginate: paginate, anchor: anchor_id %}
             </div>
           {% endpaginate %}
         {%- endif -%}
@@ -465,60 +474,6 @@
     </div>
   {%- endif -%}
 </article>
-
-{%- if is_trending_now_article -%}
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var articleShell = document.querySelector('.dekuch-article__content-shell');
-      if (!articleShell) return;
-
-      var suspiciousPatterns = [
-        '"@context"',
-        '"@type": "BlogPosting"',
-        '"headline"',
-        '"datePublished"',
-        '"publisher"',
-        'https://schema.org'
-      ];
-
-      var candidateSelectors = [
-        'p',
-        'li',
-        'div',
-        'article',
-        'section',
-        'blockquote',
-        'pre',
-        'code'
-      ];
-
-      articleShell.querySelectorAll(candidateSelectors.join(',')).forEach(function (node) {
-        var text = (node.textContent || '').replace(/\s+/g, ' ').trim();
-        if (!text) return;
-
-        var isSchemaDump = suspiciousPatterns.some(function (pattern) {
-          return text.indexOf(pattern) !== -1;
-        });
-
-        if (isSchemaDump && text.length > 120) {
-          var container = node.closest('.rte > div, .rte > article, .rte > section, .rte > ul, .rte > ol');
-          if (container && container !== articleShell) {
-            container.remove();
-          } else {
-            node.remove();
-          }
-        }
-      });
-
-      articleShell.querySelectorAll('.rte > div, .rte > article, .rte > section').forEach(function (block) {
-        var remainingText = (block.textContent || '').replace(/\s+/g, ' ').trim();
-        if (!remainingText && !block.querySelector('img, iframe, video, table, ul, ol, blockquote')) {
-          block.remove();
-        }
-      });
-    });
-  </script>
-{%- endif -%}
 
 <script type="application/ld+json">
   {{ article | structured_data }}

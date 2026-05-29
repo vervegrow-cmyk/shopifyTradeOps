@@ -1,0 +1,25 @@
+{%- liquid
+  assign policy_url = ''
+  case policy
+    when 'privacy-policy'
+      if shop.privacy_policy != blank
+        assign policy_url = shop.privacy_policy.url
+      endif
+    when 'refund-policy'
+      if shop.refund_policy != blank
+        assign policy_url = shop.refund_policy.url
+      endif
+    when 'shipping-policy'
+      if shop.shipping_policy != blank
+        assign policy_url = shop.shipping_policy.url
+      endif
+    when 'terms-of-service'
+      if shop.terms_of_service != blank
+        assign policy_url = shop.terms_of_service.url
+      endif
+    when 'contact-information'
+      assign policy_url = '/policies/contact-information'
+  endcase
+
+  echo policy_url | default: fallback
+-%}

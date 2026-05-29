@@ -7,6 +7,12 @@
   capture support_whatsapp
     render 'store-contact-meta', field: 'support_whatsapp'
   endcapture
+  capture support_whatsapp_tel
+    render 'store-contact-meta', field: 'support_whatsapp_tel'
+  endcapture
+  capture support_whatsapp_url
+    render 'store-contact-meta', field: 'support_whatsapp_url'
+  endcapture
   capture response_time
     render 'store-contact-meta', field: 'response_time'
   endcapture
@@ -28,6 +34,22 @@
   capture policy_last_updated
     render 'policy-document', policy_handle: policy_handle, type: 'updated_at'
   endcapture
+  capture privacy_policy_url
+    render 'store-policy-url', policy: 'privacy-policy', fallback: '/policies/privacy-policy'
+  endcapture
+  capture refund_policy_url
+    render 'store-policy-url', policy: 'refund-policy', fallback: '/policies/refund-policy'
+  endcapture
+  capture contact_policy_url
+    render 'store-policy-url', policy: 'contact-information', fallback: '/policies/contact-information'
+  endcapture
+  capture shipping_policy_url
+    render 'store-policy-url', policy: 'shipping-policy', fallback: '/policies/shipping-policy'
+  endcapture
+  capture terms_policy_url
+    render 'store-policy-url', policy: 'terms-of-service', fallback: '/policies/terms-of-service'
+  endcapture
+  assign continue_shopping_url = routes.all_products_collection_url
 
   assign policy_body_text = policy_body | strip_html | strip
   assign is_contact_policy = false
@@ -125,11 +147,13 @@
           <div class="main-policy-page__meta">
             <span>Official {{ storefront_name | strip }} policy page</span>
             <span>Business: {{ company_name | strip }}</span>
-            <span>Updated {{ policy_last_updated | strip }}</span>
+            {%- if policy_last_updated | strip != blank -%}
+              <span>Updated {{ policy_last_updated | strip }}</span>
+            {%- endif -%}
           </div>
           <div class="main-policy-page__hero-actions">
             <a class="main-policy-page__hero-button main-policy-page__hero-button--primary" href="mailto:{{ support_email | strip }}">Email support</a>
-            <a class="main-policy-page__hero-button main-policy-page__hero-button--secondary" href="/collections/all">Continue shopping</a>
+            <a class="main-policy-page__hero-button main-policy-page__hero-button--secondary" href="{{ continue_shopping_url }}">Continue shopping</a>
           </div>
           <div class="main-policy-page__highlights">
             <div class="main-policy-page__highlight">
@@ -149,11 +173,11 @@
         <div class="main-policy-page__hero-aside">
           <p class="main-policy-page__aside-eyebrow">Need another policy?</p>
           <div class="main-policy-page__policy-switcher">
-            <a href="/policies/privacy-policy"{% if policy_handle == 'privacy-policy' %} aria-current="page"{% endif %}>Privacy</a>
-            <a href="/policies/refund-policy"{% if policy_handle == 'refund-policy' %} aria-current="page"{% endif %}>Refunds</a>
-            <a href="/policies/contact-information"{% if policy_handle == 'contact-information' %} aria-current="page"{% endif %}>Contact</a>
-            <a href="/policies/shipping-policy"{% if policy_handle == 'shipping-policy' %} aria-current="page"{% endif %}>Shipping</a>
-            <a href="/policies/terms-of-service"{% if policy_handle == 'terms-of-service' %} aria-current="page"{% endif %}>Terms</a>
+            <a href="{{ privacy_policy_url | strip }}"{% if policy_handle == 'privacy-policy' %} aria-current="page"{% endif %}>Privacy</a>
+            <a href="{{ refund_policy_url | strip }}"{% if policy_handle == 'refund-policy' %} aria-current="page"{% endif %}>Refunds</a>
+            <a href="{{ contact_policy_url | strip }}"{% if policy_handle == 'contact-information' %} aria-current="page"{% endif %}>Contact</a>
+            <a href="{{ shipping_policy_url | strip }}"{% if policy_handle == 'shipping-policy' %} aria-current="page"{% endif %}>Shipping</a>
+            <a href="{{ terms_policy_url | strip }}"{% if policy_handle == 'terms-of-service' %} aria-current="page"{% endif %}>Terms</a>
           </div>
           <div class="main-policy-page__hero-summary">
             <strong>Policy support</strong>
@@ -202,7 +226,7 @@
         <p class="main-policy-page__overview-copy">{{ policy_usage_note }}</p>
         <div class="main-policy-page__overview-actions">
           <a class="main-policy-page__overview-button" href="mailto:{{ support_email | strip }}">Ask support</a>
-          <a class="main-policy-page__overview-button main-policy-page__overview-button--light" href="/collections/all">Continue shopping</a>
+          <a class="main-policy-page__overview-button main-policy-page__overview-button--light" href="{{ continue_shopping_url }}">Continue shopping</a>
         </div>
       </article>
     </section>
@@ -214,8 +238,8 @@
         <div class="main-policy-page__empty-state" role="status">
           <h2>Policy content is being updated</h2>
           <p>This policy page is temporarily unavailable. Please contact the Dekuch support team for the latest details.</p>
-          <p><strong>Email:</strong> {{ support_email | strip }}</p>
-          <p><strong>WhatsApp:</strong> {{ support_whatsapp | strip }}</p>
+          <p><strong>Email:</strong> <a href="mailto:{{ support_email | strip }}">{{ support_email | strip }}</a></p>
+          <p><strong>WhatsApp:</strong> <a href="{% if support_whatsapp_url != blank %}{{ support_whatsapp_url | strip }}{% else %}{{ support_whatsapp_tel | strip }}{% endif %}">{{ support_whatsapp | strip }}</a></p>
         </div>
       {%- endif -%}
     </div>

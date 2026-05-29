@@ -1451,5 +1451,61 @@
         "default": "scheme-1"
       }
     ]
+  },
+  {
+    "name": "Store contact and policies",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Use these values anywhere the theme shows support details, legal business information, or the custom contact-information policy page."
+      },
+      {
+        "type": "text",
+        "id": "store_storefront_name",
+        "label": "Storefront display name"
+      },
+      {
+        "type": "text",
+        "id": "store_company_name",
+        "label": "Legal company name"
+      },
+      {
+        "type": "text",
+        "id": "store_support_email",
+        "label": "Support email"
+      },
+      {
+        "type": "text",
+        "id": "store_support_phone",
+        "label": "Support phone / WhatsApp label"
+      },
+      {
+        "type": "text",
+        "id": "store_support_whatsapp_tel",
+        "label": "Support phone link value",
+        "info": "Use international format, for example +17752999669."
+      },
+      {
+        "type": "url",
+        "id": "store_support_whatsapp_url",
+        "label": "WhatsApp URL"
+      },
+      {
+        "type": "textarea",
+        "id": "store_business_address",
+        "label": "Business address"
+      },
+      {
+        "type": "textarea",
+        "id": "store_return_address",
+        "label": "Returns address"
+      },
+      {
+        "type": "text",
+        "id": "store_response_time",
+        "label": "Support response time",
+        "default": "Usually within 1 business day"
+      }
+    ]
   }
 ]

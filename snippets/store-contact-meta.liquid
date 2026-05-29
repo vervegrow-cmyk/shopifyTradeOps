@@ -1,24 +1,38 @@
 {%- liquid
+  assign support_email = settings.store_support_email | default: shop.email
+  assign support_whatsapp = settings.store_support_phone
+  assign support_whatsapp_tel = settings.store_support_whatsapp_tel | default: settings.store_support_phone
+  assign support_whatsapp_url = settings.store_support_whatsapp_url
+  assign company_name = settings.store_company_name | default: shop.name
+  assign storefront_name = settings.store_storefront_name | default: shop.name
+  assign business_address = settings.store_business_address
+  assign return_address = settings.store_return_address | default: business_address
+  assign response_time = settings.store_response_time | default: 'Usually within 1 business day'
+
   case field
     when 'support_email'
-      echo 'support@dekuch.com'
+      echo support_email
     when 'support_email_href'
-      echo 'mailto:support@dekuch.com'
+      if support_email != blank
+        echo 'mailto:' | append: support_email
+      endif
     when 'support_whatsapp'
-      echo '+1 775 299 9669'
+      echo support_whatsapp
     when 'support_whatsapp_tel'
-      echo 'tel:+17752999669'
+      if support_whatsapp_tel != blank
+        echo 'tel:' | append: support_whatsapp_tel
+      endif
     when 'support_whatsapp_url'
-      echo 'https://wa.me/17752999669'
+      echo support_whatsapp_url
     when 'company_name'
-      echo 'GOLE GOLDIE LLC'
+      echo company_name
     when 'storefront_name'
-      echo 'Dekuch'
+      echo storefront_name
     when 'business_address'
-      echo '402 Foulk Rd, Apt 4C0, Wilmington, DE 19803, USA'
+      echo business_address
     when 'return_address'
-      echo '9020 Murphy Rd, Woodridge, IL 60517, USA'
+      echo return_address
     when 'response_time'
-      echo 'Usually within 24 business hours'
+      echo response_time
   endcase
 -%}
