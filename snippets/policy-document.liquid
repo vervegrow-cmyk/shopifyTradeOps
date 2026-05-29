@@ -1,0 +1,295 @@
+{%- liquid
+  assign handle = policy_handle | default: request.path | split: '/' | last
+  assign policy_type = type | default: 'body'
+
+  capture support_email
+    render 'store-contact-meta', field: 'support_email'
+  endcapture
+  capture support_email_href
+    render 'store-contact-meta', field: 'support_email_href'
+  endcapture
+  capture support_whatsapp
+    render 'store-contact-meta', field: 'support_whatsapp'
+  endcapture
+  capture support_whatsapp_tel
+    render 'store-contact-meta', field: 'support_whatsapp_tel'
+  endcapture
+  capture support_whatsapp_url
+    render 'store-contact-meta', field: 'support_whatsapp_url'
+  endcapture
+  capture company_name
+    render 'store-contact-meta', field: 'company_name'
+  endcapture
+  capture storefront_name
+    render 'store-contact-meta', field: 'storefront_name'
+  endcapture
+  capture business_address
+    render 'store-contact-meta', field: 'business_address'
+  endcapture
+  capture return_address
+    render 'store-contact-meta', field: 'return_address'
+  endcapture
+  capture response_time
+    render 'store-contact-meta', field: 'response_time'
+  endcapture
+-%}
+
+{%- if policy_type == 'updated_at' -%}
+  May 29, 2026
+{%- elsif policy_type == 'body' -%}
+  {%- case handle -%}
+    {%- when 'privacy-policy' -%}
+      <div class="policy-doc">
+        <p><strong>Last updated:</strong> May 29, 2026</p>
+        <p>{{ storefront_name | strip }} is a storefront operated by <strong>{{ company_name | strip }}</strong>. This Privacy Policy explains how we collect, use, share, and protect personal information when you visit <strong>dekuch.com</strong>, place an order, contact support, request a return, or otherwise interact with our services.</p>
+        <h2>1. Who We Are</h2>
+        <p><strong>Storefront:</strong> {{ storefront_name | strip }}<br>
+        <strong>Legal business:</strong> {{ company_name | strip }}<br>
+        <strong>Business address:</strong> {{ business_address | strip }}<br>
+        <strong>US returns address:</strong> {{ return_address | strip }}<br>
+        <strong>Support email:</strong> <a href="mailto:{{ support_email | strip }}">{{ support_email | strip }}</a><br>
+        <strong>WhatsApp:</strong> <a href="tel:+17752999669">{{ support_whatsapp | strip }}</a></p>
+        <p>For the purposes of applicable privacy laws, {{ company_name | strip }} is the business responsible for deciding how personal information is collected, used, and disclosed through {{ storefront_name | strip }}.</p>
+        <h2>2. Personal Information We Collect</h2>
+        <ul>
+          <li>Contact details such as your name, shipping address, billing address, email address, and phone number.</li>
+          <li>Order details such as products purchased, payment confirmations, fulfillment details, refund history, and transaction records.</li>
+          <li>Support communications such as emails, return requests, dispute records, and messages sent to our support team.</li>
+          <li>Device and usage information such as IP address, browser type, device identifiers, general location, pages viewed, and interactions with our site.</li>
+          <li>Cookie and tracking information used for site functionality, fraud prevention, analytics, and campaign measurement.</li>
+        </ul>
+        <h2>3. How We Use Personal Information</h2>
+        <ul>
+          <li>To process and fulfill orders, payments, shipping, returns, and refunds.</li>
+          <li>To provide customer service and communicate about orders, delays, returns, or policy requests.</li>
+          <li>To maintain, improve, and secure our website, services, and checkout experience.</li>
+          <li>To detect, investigate, and prevent fraud, abuse, chargebacks, and security incidents.</li>
+          <li>To send service-related messages and, where permitted, promotional updates.</li>
+          <li>To comply with legal obligations and enforce our terms, policies, and rights.</li>
+        </ul>
+        <h2>4. Cookies and Similar Technologies</h2>
+        <ul>
+          <li><strong>Essential cookies:</strong> required for navigation, cart, checkout, security, and fraud prevention.</li>
+          <li><strong>Functional cookies:</strong> used to remember preferences such as language, region, and on-site settings.</li>
+          <li><strong>Analytics cookies:</strong> used to understand site performance and visitor behavior.</li>
+          <li><strong>Advertising and measurement technologies:</strong> used to measure campaign performance and support remarketing where applicable.</li>
+        </ul>
+        <p>You can manage cookies through your browser settings and, where presented, through our privacy controls. Blocking some cookies may affect site functionality.</p>
+        <h2>5. How We Share Personal Information</h2>
+        <p>We may share personal information with service providers and partners that support store infrastructure, checkout, payment processing, shipping, fraud prevention, customer support, analytics, and advertising measurement.</p>
+        <h2>6. Legal Bases for Processing</h2>
+        <p>Where required by law, we rely on one or more of the following legal bases: performance of a contract, legal obligations, legitimate interests, and consent where consent is required.</p>
+        <h2>7. Data Retention</h2>
+        <p>We retain personal information only for as long as reasonably necessary for order fulfillment, customer support, accounting, fraud prevention, dispute resolution, and legal compliance. Retention periods vary by data type.</p>
+        <h2>8. Your Privacy Rights</h2>
+        <p>Depending on your location, you may have rights to access, correct, delete, restrict, object to, or receive a portable copy of certain personal information. You may also have the right to withdraw consent where processing is based on consent.</p>
+        <p>To submit an access, deletion, correction, or privacy request, contact us at <a href="mailto:{{ support_email | strip }}">{{ support_email | strip }}</a> with the subject line <strong>Privacy Request</strong>. Please include your full name, order email, and request type.</p>
+        <p>We aim to acknowledge privacy requests within <strong>10 business days</strong> and provide a substantive response within <strong>45 days</strong>, or within the timeframe required by applicable law.</p>
+        <h2>9. California Privacy Notice</h2>
+        <p>If you are a California resident, you may have rights to know, access, correct, delete, and opt out of certain sharing of personal information under California law.</p>
+        <p>We do not knowingly sell personal information for money. However, some cookie-based analytics or advertising measurement practices may be considered <strong>sharing</strong> under California law. To request an opt-out review, email <a href="mailto:{{ support_email | strip }}">{{ support_email | strip }}</a> with the subject line <strong>California Privacy Request</strong>.</p>
+        <h2>10. Data Security</h2>
+        <p>We use reasonable administrative, technical, and physical safeguards designed to protect personal information. No method of transmission or storage is completely secure, so we cannot guarantee absolute security.</p>
+        <h2>11. Contact Us</h2>
+        <p><strong>{{ company_name | strip }}</strong><br>
+        {{ business_address | strip }}<br>
+        <a href="mailto:{{ support_email | strip }}">{{ support_email | strip }}</a><br>
+        <a href="tel:+17752999669">{{ support_whatsapp | strip }}</a></p>
+      </div>
+    {%- when 'refund-policy' -%}
+      <div class="policy-doc">
+        <p><strong>Last updated:</strong> May 29, 2026</p>
+        <p>This Refund Policy applies to purchases made from {{ storefront_name | strip }}, operated by <strong>{{ company_name | strip }}</strong>.</p>
+        <h2>1. Business and Support Details</h2>
+        <p><strong>Legal business:</strong> {{ company_name | strip }}<br>
+        <strong>Business address:</strong> {{ business_address | strip }}<br>
+        <strong>US returns address:</strong> {{ return_address | strip }}<br>
+        <strong>Support email:</strong> <a href="mailto:{{ support_email | strip }}">{{ support_email | strip }}</a><br>
+        <strong>WhatsApp:</strong> <a href="tel:+17752999669">{{ support_whatsapp | strip }}</a></p>
+        <h2>2. Return Window</h2>
+        <p>You may request a return within <strong>30 calendar days</strong> of the delivery date shown by the carrier tracking record.</p>
+        <h2>3. Eligible Returns</h2>
+        <ul>
+          <li>Items that arrived damaged, defective, materially different, or delivered in error.</li>
+          <li>Items lost in transit and confirmed as undelivered by the carrier.</li>
+          <li>Unused items in original condition approved by our support team for return.</li>
+        </ul>
+        <h2>4. Non-Returnable Items</h2>
+        <ul>
+          <li>Used items, damaged-after-delivery items, or returns with missing parts.</li>
+          <li>Items returned without approval.</li>
+          <li>Final-sale, clearance, personalized, hygiene-sensitive, or consumable items clearly marked non-returnable.</li>
+          <li>Requests submitted after the stated return window.</li>
+        </ul>
+        <h2>5. How to Start a Return</h2>
+        <p>Email <a href="mailto:{{ support_email | strip }}">{{ support_email | strip }}</a> with the subject line <strong>Return Request</strong> and include your order number, item name, issue summary, and photos or video when relevant.</p>
+        <p>Please do not send items back before receiving instructions from our support team.</p>
+        <h2>6. Return Shipping</h2>
+        <p>If the return is due to our error, damage, or a defective item, we may provide a prepaid return label or another approved return method. If the return is discretionary, the customer may be responsible for return shipping unless otherwise agreed in writing.</p>
+        <h2>7. Refund Method and Timing</h2>
+        <p>Approved refunds are generally issued to the original payment method. Once approved, please allow up to <strong>10 business days</strong> for processing on our side and additional time for your bank or payment provider to post the refund.</p>
+        <h2>8. Order Cancellations</h2>
+        <p>Orders may only be canceled before they are processed for shipment. Once an order has entered fulfillment, cancellation may no longer be possible and the order will instead follow the return process above.</p>
+        <h2>9. Contact Us</h2>
+        <p>For refund or return support, contact us at <a href="mailto:{{ support_email | strip }}">{{ support_email | strip }}</a> or <a href="tel:+17752999669">{{ support_whatsapp | strip }}</a>. Typical response time is {{ response_time | strip | downcase }}.</p>
+      </div>
+    {%- when 'contact-information' -%}
+      <div class="policy-doc">
+        <p><strong>Last updated:</strong> May 29, 2026</p>
+        <p>This page is the official contact center for {{ storefront_name | strip }}, operated by <strong>{{ company_name | strip }}</strong>. Use the sections below to contact the right team for order support, return requests, privacy inquiries, shipping questions, or formal business notices.</p>
+        <div class="policy-contact-summary">
+          <div class="policy-contact-summary__item">
+            <strong>Support email</strong>
+            <span><a href="{{ support_email_href | strip }}">{{ support_email | strip }}</a></span>
+          </div>
+          <div class="policy-contact-summary__item">
+            <strong>WhatsApp</strong>
+            <span><a href="{{ support_whatsapp_tel | strip }}">{{ support_whatsapp | strip }}</a></span>
+          </div>
+          <div class="policy-contact-summary__item">
+            <strong>Response time</strong>
+            <span>{{ response_time | strip }}</span>
+          </div>
+        </div>
+        <div class="policy-contact-hero-actions">
+          <a class="policy-contact-action policy-contact-action--primary" href="{{ support_email_href | strip }}">Email Dekuch Support</a>
+          <a class="policy-contact-action policy-contact-action--secondary" href="{{ support_whatsapp_url | strip }}">Message on WhatsApp</a>
+        </div>
+        <div class="policy-contact-grid">
+          <article class="policy-contact-card">
+            <p class="policy-contact-card__eyebrow">Customer support</p>
+            <h2>Email support</h2>
+            <p>Use email for order updates, damaged items, refund requests, delivery issues, product questions, and all general after-sales support.</p>
+            <p><strong>Email:</strong> <a href="{{ support_email_href | strip }}">{{ support_email | strip }}</a></p>
+            <p><strong>Response time:</strong> {{ response_time | strip }}</p>
+            <div class="policy-contact-actions">
+              <a class="policy-contact-action" href="{{ support_email_href | strip }}">Contact by email</a>
+            </div>
+          </article>
+          <article class="policy-contact-card">
+            <p class="policy-contact-card__eyebrow">Fast contact</p>
+            <h2>WhatsApp support</h2>
+            <p>Use WhatsApp for simple pre-sale questions, shipment follow-up, and quick order assistance when a message-based channel is more convenient.</p>
+            <p><strong>WhatsApp:</strong> <a href="{{ support_whatsapp_tel | strip }}">{{ support_whatsapp | strip }}</a></p>
+            <p><strong>Availability:</strong> You may message us at any time and our team will reply during normal support handling hours.</p>
+            <div class="policy-contact-actions">
+              <a class="policy-contact-action" href="{{ support_whatsapp_url | strip }}">Open WhatsApp</a>
+            </div>
+          </article>
+        </div>
+        <h2>1. Official Business Details</h2>
+        <div class="policy-contact-details">
+          <div>
+            <strong>Storefront name</strong>
+            <p>{{ storefront_name | strip }}</p>
+          </div>
+          <div>
+            <strong>Legal business</strong>
+            <p>{{ company_name | strip }}</p>
+          </div>
+          <div>
+            <strong>Business address</strong>
+            <p>{{ business_address | strip }}</p>
+          </div>
+          <div>
+            <strong>US returns address</strong>
+            <p>{{ return_address | strip }}</p>
+          </div>
+        </div>
+        <h2>2. Which Contact Channel Should You Use?</h2>
+        <div class="policy-contact-uses">
+          <div class="policy-contact-use">
+            <strong>Order support</strong>
+            <p>Use email for missing items, damaged deliveries, wrong products, refund requests, or order updates. Please include your order number whenever available.</p>
+          </div>
+          <div class="policy-contact-use">
+            <strong>Privacy requests</strong>
+            <p>Use email with the subject line <strong>Privacy Request</strong> for access, deletion, correction, or other privacy-rights inquiries.</p>
+          </div>
+          <div class="policy-contact-use">
+            <strong>Shipping questions</strong>
+            <p>Use WhatsApp or email for tracking questions, delivery delays, address corrections, or package investigation requests.</p>
+          </div>
+          <div class="policy-contact-use">
+            <strong>Legal notices</strong>
+            <p>Use email for formal legal communications relating to compliance, business identification, or official store policies.</p>
+          </div>
+        </div>
+        <h2>3. What to Include in Your Message</h2>
+        <ul>
+          <li>Your full name and the email address used at checkout.</li>
+          <li>Your order number, if your message is about a purchase.</li>
+          <li>A short and clear description of the issue or request.</li>
+          <li>Photos, video, or tracking details when they help explain the matter.</li>
+        </ul>
+        <h2>4. Related Policy Pages</h2>
+        <div class="policy-contact-links">
+          <a href="/policies/refund-policy">Refund Policy</a>
+          <a href="/policies/shipping-policy">Shipping Policy</a>
+          <a href="/policies/privacy-policy">Privacy Policy</a>
+          <a href="/policies/terms-of-service">Terms of Service</a>
+        </div>
+        <h2>5. Legal Notice Contact</h2>
+        <p><strong>{{ company_name | strip }}</strong><br>
+        {{ business_address | strip }}<br>
+        <a href="{{ support_email_href | strip }}">{{ support_email | strip }}</a><br>
+        <a href="{{ support_whatsapp_tel | strip }}">{{ support_whatsapp | strip }}</a></p>
+      </div>
+    {%- when 'shipping-policy' -%}
+      <div class="policy-doc">
+        <p><strong>Last updated:</strong> May 29, 2026</p>
+        <p>This Shipping Policy explains how orders placed with {{ storefront_name | strip }}, operated by <strong>{{ company_name | strip }}</strong>, are processed and delivered.</p>
+        <h2>1. Shipping Coverage</h2>
+        <p>At this time, we ship to addresses within the <strong>United States only</strong>. If we expand shipping destinations in the future, eligible regions will be updated on our storefront and checkout pages before purchase.</p>
+        <h2>2. Order Processing Time</h2>
+        <p>Orders are typically processed within <strong>1 to 3 business days</strong> after payment is authorized. Processing times may be longer during peak periods, holidays, severe weather events, or if additional order verification is required.</p>
+        <h2>3. Estimated Delivery Time</h2>
+        <p>After dispatch, most US orders arrive within approximately <strong>5 to 10 business days</strong>. Delivery timelines are estimates only and are not guaranteed unless explicitly stated at checkout.</p>
+        <h2>4. Shipping Charges</h2>
+        <p>We currently offer <strong>free standard shipping on eligible US orders</strong> unless otherwise stated on the product page, cart, or checkout.</p>
+        <h2>5. Carriers and Tracking</h2>
+        <p>Orders may be shipped using one or more domestic or cross-border logistics partners depending on destination and package size. When tracking is available, we provide tracking details by email after shipment.</p>
+        <h2>6. Address Accuracy</h2>
+        <p>Please review your shipping address carefully before placing an order. We are not responsible for delays, losses, or extra charges caused by incomplete, incorrect, or undeliverable addresses submitted at checkout.</p>
+        <h2>7. PO Boxes, Military Addresses, and Remote Areas</h2>
+        <p>Some shipping methods may not support PO boxes, APO/FPO addresses, or certain remote areas. If a delivery restriction applies, support will contact you to discuss available options.</p>
+        <h2>8. Delays, Lost Packages, and Delivery Issues</h2>
+        <p>If a shipment appears lost, substantially delayed, or marked delivered but not received, contact <a href="mailto:{{ support_email | strip }}">{{ support_email | strip }}</a> with your order number and tracking details so we can investigate.</p>
+        <h2>9. Refused, Unclaimed, or Returned Packages</h2>
+        <p>If a package is refused, unclaimed, or returned due to an incorrect address or delivery failure not caused by us, any refund may be reduced by applicable return shipping, handling, or carrier fees.</p>
+        <h2>10. Contact Us</h2>
+        <p>For shipping support, contact <a href="mailto:{{ support_email | strip }}">{{ support_email | strip }}</a> or <a href="tel:+17752999669">{{ support_whatsapp | strip }}</a>.</p>
+      </div>
+    {%- when 'terms-of-service' -%}
+      <div class="policy-doc">
+        <p><strong>Last updated:</strong> May 29, 2026</p>
+        <p>These Terms of Service govern your access to and use of {{ storefront_name | strip }}, including purchases made through <strong>dekuch.com</strong>. By using this website or placing an order, you agree to these Terms.</p>
+        <h2>1. Business Information</h2>
+        <p><strong>Storefront:</strong> {{ storefront_name | strip }}<br>
+        <strong>Legal business:</strong> {{ company_name | strip }}<br>
+        <strong>Business address:</strong> {{ business_address | strip }}<br>
+        <strong>Support email:</strong> <a href="mailto:{{ support_email | strip }}">{{ support_email | strip }}</a><br>
+        <strong>WhatsApp:</strong> <a href="tel:+17752999669">{{ support_whatsapp | strip }}</a></p>
+        <h2>2. Use of the Website</h2>
+        <p>You agree to use this website only for lawful purposes and in a way that does not violate applicable laws, infringe the rights of others, or interfere with the operation, integrity, or security of the website.</p>
+        <h2>3. Product Information, Pricing, and Availability</h2>
+        <p>We try to ensure that product descriptions, availability, images, and pricing are reasonably accurate. However, errors may occur. We reserve the right to correct errors, update information, limit quantities, or cancel orders where information is inaccurate or unavailable.</p>
+        <h2>4. Orders and Payment</h2>
+        <p>By placing an order, you represent that the information provided is accurate and that you are authorized to use the selected payment method. We reserve the right to refuse, limit, or cancel orders if we reasonably suspect fraud, abuse, pricing error, or other risk.</p>
+        <h2>5. Shipping, Returns, and Refunds</h2>
+        <p>Your purchase is also governed by our Shipping Policy and Refund Policy, which form part of these Terms.</p>
+        <h2>6. Intellectual Property</h2>
+        <p>All website content, including text, branding, graphics, logos, images, layouts, and design elements, is owned by or licensed to {{ company_name | strip }} and may not be copied, reproduced, distributed, or used without permission except as permitted by law.</p>
+        <h2>7. Disclaimer of Warranties</h2>
+        <p>To the fullest extent permitted by law, the website and all services are provided on an <strong>as is</strong> and <strong>as available</strong> basis without warranties of any kind, whether express or implied.</p>
+        <h2>8. Limitation of Liability</h2>
+        <p>To the fullest extent permitted by law, {{ company_name | strip }} will not be liable for indirect, incidental, special, consequential, or punitive damages arising from or related to your use of the website, products, or services.</p>
+        <h2>9. Privacy</h2>
+        <p>Your use of the website is also subject to our Privacy Policy, which describes how we collect and process personal information.</p>
+        <h2>10. Changes to These Terms</h2>
+        <p>We may update these Terms from time to time. Any updates will be posted on this page with a revised last updated date.</p>
+        <h2>11. Contact Us</h2>
+        <p>If you have questions about these Terms, contact <a href="mailto:{{ support_email | strip }}">{{ support_email | strip }}</a> or <a href="tel:+17752999669">{{ support_whatsapp | strip }}</a>.</p>
+      </div>
+  {%- endcase -%}
+{%- endif -%}

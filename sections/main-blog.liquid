@@ -1,0 +1,232 @@
+{{ 'component-article-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'section-main-blog.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign is_trending_now_blog = false
+  if blog.handle == 'trending-now'
+    assign is_trending_now_blog = true
+  endif
+-%}
+
+{%- paginate blog.articles by 6 -%}
+  <div class="main-blog page-width section-{{ section.id }}-padding{% if is_trending_now_blog %} dekuch-blog dekuch-blog--trending{% endif %}">
+    {%- if is_trending_now_blog -%}
+      <section class="dekuch-blog__hero{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        <div class="dekuch-blog__hero-copy">
+          <p class="dekuch-blog__eyebrow">Dekuch Journal</p>
+          <h1 class="dekuch-blog__title">{{ blog.title | escape }}</h1>
+          <p class="dekuch-blog__intro">
+            Explore product roundups, shopping ideas, and lifestyle picks from the Dekuch catalog. This space keeps
+            fast-moving gift ideas, home finds, and seasonal clearance inspiration in one place.
+          </p>
+          <div class="dekuch-blog__hero-meta">
+            <span>{{ blog.articles_count }} stories published</span>
+            <span>Updated with current shopping topics</span>
+            <span>Home, gadgets, gifts, and practical picks</span>
+          </div>
+        </div>
+        <div class="dekuch-blog__hero-panel">
+          <h2>What you will find here</h2>
+          <ul>
+            <li>Gift and product idea roundups</li>
+            <li>Trending home and lifestyle picks</li>
+            <li>Shopping inspiration tied to current catalog items</li>
+          </ul>
+          <a href="/collections/all" class="button button--primary">Shop All Products</a>
+        </div>
+      </section>
+
+      <div class="dekuch-blog__toolbar{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        <div>
+          <strong>Browse the latest articles</strong>
+          <span>Read the newest updates from the Dekuch content feed.</span>
+        </div>
+        <a href="/pages/about-us-dekuch-1">About Dekuch</a>
+      </div>
+
+      <div class="dekuch-blog__articles">
+        {%- for article in blog.articles -%}
+          <article
+            class="dekuch-blog-card{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {% if settings.animations_reveal_on_scroll %}
+              data-cascade
+              style="--animation-order: {{ forloop.index }};"
+            {% endif %}
+          >
+            <a class="dekuch-blog-card__media" href="{{ article.url }}">
+              {%- if article.image -%}
+                {{
+                  article.image
+                  | image_url: width: 900
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '360, 533, 720, 900',
+                    class: 'motion-reduce',
+                    alt: article.image.alt
+                }}
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </a>
+            <div class="dekuch-blog-card__body">
+              <div class="dekuch-blog-card__meta">
+                <span>{{ article.published_at | date: '%b %d, %Y' }}</span>
+                <span>{{ blog.title | escape }}</span>
+              </div>
+              <h2 class="dekuch-blog-card__title">
+                <a href="{{ article.url }}">{{ article.title | escape }}</a>
+              </h2>
+              <p class="dekuch-blog-card__excerpt">
+                {%- if article.excerpt.size > 0 -%}
+                  {{ article.excerpt | strip_html | truncatewords: 26 }}
+                {%- else -%}
+                  {{ article.content | strip_html | truncatewords: 26 }}
+                {%- endif -%}
+              </p>
+              <div class="dekuch-blog-card__footer">
+                <a href="{{ article.url }}">Read article</a>
+              </div>
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <h1 class="title--primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {{ blog.title | escape }}
+      </h1>
+
+      <div class="blog-articles {% if section.settings.layout == 'collage' %}blog-articles--collage{% endif %}">
+        {%- for article in blog.articles -%}
+          <div
+            class="blog-articles__article article{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {% if settings.animations_reveal_on_scroll %}
+              data-cascade
+              style="--animation-order: {{ forloop.index }};"
+            {% endif %}
+          >
+            {%- render 'article-card',
+              article: article,
+              media_height: section.settings.image_height,
+              media_aspect_ratio: article.image.aspect_ratio,
+              show_image: section.settings.show_image,
+              show_date: section.settings.show_date,
+              show_author: section.settings.show_author,
+              show_excerpt: true
+            -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if paginate.pages > 1 -%}
+      {%- render 'pagination', paginate: paginate -%}
+    {%- endif -%}
+  </div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "t:sections.main-blog.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "options": [
+        {
+          "value": "grid",
+          "label": "t:sections.main-blog.settings.layout.options__1.label"
+        },
+        {
+          "value": "collage",
+          "label": "t:sections.main-blog.settings.layout.options__2.label"
+        }
+      ],
+      "default": "collage",
+      "label": "t:sections.main-blog.settings.layout.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "default": true,
+      "label": "t:sections.main-blog.settings.show_image.label"
+    },
+    {
+      "type": "select",
+      "id": "image_height",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.main-blog.settings.image_height.options__1.label"
+        },
+        {
+          "value": "small",
+          "label": "t:sections.main-blog.settings.image_height.options__2.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:sections.main-blog.settings.image_height.options__3.label"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.main-blog.settings.image_height.options__4.label"
+        }
+      ],
+      "default": "medium",
+      "label": "t:sections.main-blog.settings.image_height.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "default": true,
+      "label": "t:sections.main-blog.settings.show_date.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "default": false,
+      "label": "t:sections.main-blog.settings.show_author.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}

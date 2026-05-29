@@ -1,0 +1,15 @@
+# Node / build
+node_modules/
+.DS_Store
+.cache
+dist/
+
+# Shopify temp
+.shopifyignore
+
+# Local IDE
+.vscode/
+.idea/
+
+# Logs
+*.log

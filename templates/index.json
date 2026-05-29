@@ -1,0 +1,382 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner": {
+      "type": "image-banner",
+      "blocks": {
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "Dekuch clearance picks",
+            "text_style": "caption-with-letter-spacing"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Today's clearance picks for your home and everyday life",
+            "heading_size": "h0"
+          }
+        },
+        "button": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Shop Deals",
+            "button_link_1": "shopify://collections/all",
+            "button_style_secondary_1": false,
+            "button_label_2": "Customer Support",
+            "button_link_2": "/policies/contact-information",
+            "button_style_secondary_2": true
+          }
+        }
+      },
+      "block_order": [
+        "text",
+        "heading",
+        "button"
+      ],
+      "settings": {
+        "image_overlay_opacity": 20,
+        "image_height": "medium",
+        "desktop_content_position": "middle-left",
+        "show_text_box": true,
+        "desktop_content_alignment": "left",
+        "color_scheme": "scheme-4",
+        "image_behavior": "none",
+        "mobile_content_alignment": "left",
+        "stack_images_on_mobile": true,
+        "show_text_below": false
+      }
+    },
+    "deal_bar": {
+      "type": "rich-text",
+      "blocks": {
+        "deal_bar_text": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>Popular right now:</strong> Lighting deals | Smart home picks | Kitchen helpers | Home cleaning tools | Seasonal clearance</p>"
+          }
+        }
+      },
+      "block_order": [
+        "deal_bar_text"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "scheme-3",
+        "full_width": true,
+        "padding_top": 8,
+        "padding_bottom": 8
+      }
+    },
+    "multicolumn": {
+      "type": "multicolumn",
+      "blocks": {
+        "column1": {
+          "type": "column",
+          "settings": {
+            "title": "Free shipping",
+            "text": "<p>Free standard shipping on eligible US orders with clear delivery expectations.</p>",
+            "link_label": "Shipping policy",
+            "link": ""
+          }
+        },
+        "column2": {
+          "type": "column",
+          "settings": {
+            "title": "Fast support",
+            "text": "<p>Reach support@dekuch.com and usually hear back within 24 business hours.</p>",
+            "link_label": "Contact information",
+            "link": "/policies/contact-information"
+          }
+        },
+        "column3": {
+          "type": "column",
+          "settings": {
+            "title": "Secure checkout",
+            "text": "<p>Pay with trusted methods including PayPal, Shop Pay, Visa, and Mastercard.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column4": {
+          "type": "column",
+          "settings": {
+            "title": "Easy returns",
+            "text": "<p>Clear refund, shipping, and privacy policies across the storefront.</p>",
+            "link_label": "Refund policy",
+            "link": "/policies/refund-policy"
+          }
+        }
+      },
+      "block_order": [
+        "column1",
+        "column2",
+        "column3",
+        "column4"
+      ],
+      "settings": {
+        "title": "Shop with confidence",
+        "heading_size": "h2",
+        "image_width": "third",
+        "image_ratio": "adapt",
+        "columns_desktop": 4,
+        "column_alignment": "left",
+        "background_style": "none",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "scheme-2",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 32,
+        "padding_bottom": 24
+      }
+    },
+    "category_bar": {
+      "type": "rich-text",
+      "blocks": {
+        "category_bar_text": {
+          "type": "text",
+          "settings": {
+            "text": "<p><a href=\"/collections/all\">All deals</a> <a href=\"/collections/all\">Home</a> <a href=\"/collections/all\">Kitchen</a> <a href=\"/collections/all\">Lighting</a> <a href=\"/collections/all\">Storage</a> <a href=\"/collections/all\">Gadgets</a> <a href=\"/collections/all\">Seasonal picks</a></p>"
+          }
+        }
+      },
+      "block_order": [
+        "category_bar_text"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-2",
+        "full_width": true,
+        "padding_top": 8,
+        "padding_bottom": 8
+      }
+    },
+    "rich_text": {
+      "type": "rich-text",
+      "blocks": {
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Fast shipping, responsive support, and cleaner policy pages built for confident checkout.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "text"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-4",
+        "full_width": true,
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    },
+    "featured_collection1": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Best-selling deals",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "all",
+        "products_to_show": 10,
+        "columns_desktop": 5,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "enable_desktop_slider": false,
+        "color_scheme": "",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 40
+      }
+    },
+    "multicolumn1": {
+      "type": "multicolumn",
+      "blocks": {
+        "column7": {
+          "type": "column",
+          "settings": {
+            "title": "Unified policy center",
+            "text": "<p>Privacy, refunds, shipping, contact details, and terms now live under clean official policy routes.</p>",
+            "link_label": "Open policy center",
+            "link": "/policies/terms-of-service"
+          }
+        },
+        "column8": {
+          "type": "column",
+          "settings": {
+            "title": "US-first delivery promise",
+            "text": "<p>Shipping policy and contact paths are now consistent with a US-only delivery scope.</p>",
+            "link_label": "Review shipping",
+            "link": "/policies/shipping-policy"
+          }
+        },
+        "column9": {
+          "type": "column",
+          "settings": {
+            "title": "Single support identity",
+            "text": "<p>Support channels, company details, and return address are aligned across the storefront.</p>",
+            "link_label": "Contact support",
+            "link": "/policies/contact-information"
+          }
+        },
+        "column10": {
+          "type": "column",
+          "settings": {
+            "title": "Shop with clarity",
+            "text": "<p>The store now emphasizes policy transparency, cleaner layout, and lower-friction trust signals.</p>",
+            "link_label": "Read privacy policy",
+            "link": "/policies/privacy-policy"
+          }
+        }
+      },
+      "block_order": [
+        "column7",
+        "column8",
+        "column9",
+        "column10"
+      ],
+      "settings": {
+        "title": "Why the new storefront is better",
+        "heading_size": "h2",
+        "image_width": "third",
+        "image_ratio": "adapt",
+        "columns_desktop": 4,
+        "column_alignment": "left",
+        "background_style": "primary",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "scheme-1",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "featured_collection2": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "More clearance finds",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "all",
+        "products_to_show": 6,
+        "columns_desktop": 5,
+        "full_width": false,
+        "show_view_all": false,
+        "view_all_style": "solid",
+        "enable_desktop_slider": false,
+        "color_scheme": "",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    },
+    "multicolumn2": {
+      "type": "multicolumn",
+      "blocks": {
+        "column11": {
+          "type": "column",
+          "settings": {
+            "title": "Email support",
+            "text": "<p>support@dekuch.com</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column12": {
+          "type": "column",
+          "settings": {
+            "title": "WhatsApp",
+            "text": "<p>+1 775 299 9669</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column13": {
+          "type": "column",
+          "settings": {
+            "title": "Business address",
+            "text": "<p>402 Foulk Rd, Apt 4C0, Wilmington, DE 19803, USA</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column14": {
+          "type": "column",
+          "settings": {
+            "title": "Returns address",
+            "text": "<p>9020 Murphy Rd, Woodridge, IL 60517, USA</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column11",
+        "column12",
+        "column13",
+        "column14"
+      ],
+      "settings": {
+        "title": "Official business details",
+        "heading_size": "h2",
+        "image_width": "third",
+        "image_ratio": "adapt",
+        "columns_desktop": 4,
+        "column_alignment": "left",
+        "background_style": "primary",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "scheme-3",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 44,
+        "padding_bottom": 56
+      }
+    }
+  },
+  "order": [
+    "image_banner",
+    "deal_bar",
+    "multicolumn",
+    "category_bar",
+    "rich_text",
+    "featured_collection1",
+    "multicolumn1",
+    "featured_collection2",
+    "multicolumn2"
+  ]
+}

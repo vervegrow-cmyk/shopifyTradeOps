@@ -1,0 +1,186 @@
+{%- liquid
+  capture support_email
+    render 'store-contact-meta', field: 'support_email'
+  endcapture
+  capture support_email_href
+    render 'store-contact-meta', field: 'support_email_href'
+  endcapture
+  capture support_whatsapp
+    render 'store-contact-meta', field: 'support_whatsapp'
+  endcapture
+  capture support_whatsapp_url
+    render 'store-contact-meta', field: 'support_whatsapp_url'
+  endcapture
+  capture company_name
+    render 'store-contact-meta', field: 'company_name'
+  endcapture
+  capture business_address
+    render 'store-contact-meta', field: 'business_address'
+  endcapture
+  capture return_address
+    render 'store-contact-meta', field: 'return_address'
+  endcapture
+  capture response_time
+    render 'store-contact-meta', field: 'response_time'
+  endcapture
+-%}
+
+<div class="about-dekuch">
+  <section class="about-dekuch__hero">
+    <div class="about-dekuch__hero-content">
+      <p class="about-dekuch__eyebrow">About Dekuch</p>
+      <h1 class="about-dekuch__title">Smart deals, everyday essentials, and support you can actually reach.</h1>
+      <p class="about-dekuch__copy">
+        Dekuch is built for shoppers who want practical home, kitchen, and lifestyle finds without inflated pricing.
+        We keep the experience simple: clear product selection, straightforward shipping, and visible support
+        information before and after checkout.
+      </p>
+
+      <div class="about-dekuch__hero-points">
+        <div class="about-dekuch__hero-point">
+          <strong>Ships from the U.S.</strong>
+          <span>Orders are typically processed within 48 business hours.</span>
+        </div>
+        <div class="about-dekuch__hero-point">
+          <strong>Free shipping</strong>
+          <span>Free US shipping on eligible orders with visible checkout terms.</span>
+        </div>
+        <div class="about-dekuch__hero-point">
+          <strong>Returns support</strong>
+          <span>Help is available if an order is not the right fit after delivery.</span>
+        </div>
+        <div class="about-dekuch__hero-point">
+          <strong>Responsive support</strong>
+          <span>Customer care usually replies within 24 business hours.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-dekuch__hero-media">
+      <img
+        src="https://cdn.shopify.com/s/files/1/0875/5622/7378/files/About_Us_Dekuch.png?v=1742019550"
+        alt="Dekuch brand introduction"
+        loading="lazy"
+      >
+    </div>
+  </section>
+
+  <div class="about-dekuch__grid">
+    <section class="about-dekuch__panel">
+      <h2 class="about-dekuch__heading">Why customers choose Dekuch</h2>
+      <p class="about-dekuch__copy">
+        We focus on useful categories and a low-friction shopping experience instead of filler content or confusing
+        storefront layers. The goal is simple: make it easy to understand what we sell, how shipping works, and who to
+        contact when you need help.
+      </p>
+
+      <div class="about-dekuch__pillars">
+        <article class="about-dekuch__pillar">
+          <span class="about-dekuch__mini-title">Curated essentials</span>
+          <span class="about-dekuch__mini-copy">Home, kitchen, and lifestyle products selected for value and everyday use.</span>
+        </article>
+        <article class="about-dekuch__pillar">
+          <span class="about-dekuch__mini-title">Transparent policies</span>
+          <span class="about-dekuch__mini-copy">Shipping, returns, privacy, and terms are all visible on-site.</span>
+        </article>
+        <article class="about-dekuch__pillar">
+          <span class="about-dekuch__mini-title">Support after checkout</span>
+          <span class="about-dekuch__mini-copy">Questions about delivery, updates, or returns can be handled through our support channels.</span>
+        </article>
+      </div>
+
+      <div class="about-dekuch__links">
+        <a class="about-dekuch__link-card" href="/policies/shipping-policy">
+          <span class="about-dekuch__mini-title">Shipping Policy</span>
+          <span class="about-dekuch__mini-copy">Processing times, delivery expectations, and fulfillment details.</span>
+        </a>
+        <a class="about-dekuch__link-card" href="/policies/refund-policy">
+          <span class="about-dekuch__mini-title">Refund Policy</span>
+          <span class="about-dekuch__mini-copy">How returns work, timelines, and what to expect after a request.</span>
+        </a>
+        <a class="about-dekuch__link-card" href="/policies/privacy-policy">
+          <span class="about-dekuch__mini-title">Privacy Policy</span>
+          <span class="about-dekuch__mini-copy">How customer information is handled on Dekuch.</span>
+        </a>
+        <a class="about-dekuch__link-card" href="/policies/terms-of-service">
+          <span class="about-dekuch__mini-title">Terms of Service</span>
+          <span class="about-dekuch__mini-copy">Order, payment, and site-use terms in one place.</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="about-dekuch__panel about-dekuch__panel--accent">
+      <h2 class="about-dekuch__heading">What to expect when you order</h2>
+      <ul class="about-dekuch__list">
+        <li>Orders are normally processed and prepared for shipment within 48 business hours.</li>
+        <li>Free US shipping is available on eligible orders.</li>
+        <li>Support is available for delivery questions, order updates, and return requests.</li>
+        <li>Policy pages are visible before checkout so customers can review terms in advance.</li>
+      </ul>
+
+      <div class="about-dekuch__details">
+        <div class="about-dekuch__detail">
+          <span class="about-dekuch__label">Business name</span>
+          <span class="about-dekuch__value">{{ company_name | strip }}</span>
+        </div>
+        <div class="about-dekuch__detail">
+          <span class="about-dekuch__label">Business address</span>
+          <span class="about-dekuch__value">{{ business_address | strip }}</span>
+        </div>
+        <div class="about-dekuch__detail">
+          <span class="about-dekuch__label">U.S. returns address</span>
+          <span class="about-dekuch__value">{{ return_address | strip }}</span>
+        </div>
+        <div class="about-dekuch__detail">
+          <span class="about-dekuch__label">Support window</span>
+          <span class="about-dekuch__value">{{ response_time | strip }}</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="about-dekuch__panel">
+    <h2 class="about-dekuch__heading">Contact and policy access</h2>
+    <p class="about-dekuch__copy">
+      If you need help before or after checkout, use the contact details below. For formal store terms, shipping rules,
+      or privacy information, you can also open the linked policy pages at any time.
+    </p>
+
+    <div class="about-dekuch__contact">
+      <article class="about-dekuch__contact-card">
+        <span class="about-dekuch__mini-title">Email support</span>
+        <span class="about-dekuch__mini-copy"><a href="{{ support_email_href | strip }}">{{ support_email | strip }}</a></span>
+      </article>
+      <article class="about-dekuch__contact-card">
+        <span class="about-dekuch__mini-title">WhatsApp support</span>
+        <span class="about-dekuch__mini-copy"><a href="{{ support_whatsapp_url | strip }}">{{ support_whatsapp | strip }}</a></span>
+      </article>
+      <article class="about-dekuch__contact-card">
+        <span class="about-dekuch__mini-title">Returns address</span>
+        <span class="about-dekuch__mini-copy">{{ return_address | strip }}</span>
+      </article>
+      <article class="about-dekuch__contact-card">
+        <span class="about-dekuch__mini-title">Support hours</span>
+        <span class="about-dekuch__mini-copy">{{ response_time | strip }}</span>
+      </article>
+    </div>
+  </section>
+
+  <section class="about-dekuch__faq">
+    <h2 class="about-dekuch__heading">Quick FAQ</h2>
+    <div class="about-dekuch__faq-list">
+      <article class="about-dekuch__faq-item">
+        <p class="about-dekuch__mini-title">What does Dekuch sell?</p>
+        <p class="about-dekuch__faq-copy">Dekuch focuses on home, kitchen, and lifestyle products selected for value-driven everyday shopping.</p>
+      </article>
+      <article class="about-dekuch__faq-item">
+        <p class="about-dekuch__mini-title">Where do orders ship from?</p>
+        <p class="about-dekuch__faq-copy">Orders are processed from the U.S. and are typically prepared for shipment within 48 business hours.</p>
+      </article>
+      <article class="about-dekuch__faq-item">
+        <p class="about-dekuch__mini-title">How can I review store policies?</p>
+        <p class="about-dekuch__faq-copy">You can open the Shipping Policy, Refund Policy, Privacy Policy, and Terms of Service directly from this page or from the footer.</p>
+      </article>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,24 @@
+{%- liquid
+  case field
+    when 'support_email'
+      echo 'support@dekuch.com'
+    when 'support_email_href'
+      echo 'mailto:support@dekuch.com'
+    when 'support_whatsapp'
+      echo '+1 775 299 9669'
+    when 'support_whatsapp_tel'
+      echo 'tel:+17752999669'
+    when 'support_whatsapp_url'
+      echo 'https://wa.me/17752999669'
+    when 'company_name'
+      echo 'GOLE GOLDIE LLC'
+    when 'storefront_name'
+      echo 'Dekuch'
+    when 'business_address'
+      echo '402 Foulk Rd, Apt 4C0, Wilmington, DE 19803, USA'
+    when 'return_address'
+      echo '9020 Murphy Rd, Woodridge, IL 60517, USA'
+    when 'response_time'
+      echo 'Usually within 24 business hours'
+  endcase
+-%}

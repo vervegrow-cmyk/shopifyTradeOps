@@ -1,0 +1,337 @@
+{%- liquid
+  assign policy_handle = request.path | split: '/' | last
+  capture support_email
+    render 'store-contact-meta', field: 'support_email'
+  endcapture
+  capture support_whatsapp
+    render 'store-contact-meta', field: 'support_whatsapp'
+  endcapture
+  capture response_time
+    render 'store-contact-meta', field: 'response_time'
+  endcapture
+  capture company_name
+    render 'store-contact-meta', field: 'company_name'
+  endcapture
+  capture storefront_name
+    render 'store-contact-meta', field: 'storefront_name'
+  endcapture
+  capture business_address
+    render 'store-contact-meta', field: 'business_address'
+  endcapture
+  capture return_address
+    render 'store-contact-meta', field: 'return_address'
+  endcapture
+  capture policy_body
+    render 'policy-document', policy_handle: policy_handle, type: 'body'
+  endcapture
+  capture policy_last_updated
+    render 'policy-document', policy_handle: policy_handle, type: 'updated_at'
+  endcapture
+  assign policy_body_text = policy_body | strip_html | strip
+  assign is_contact_policy = false
+  assign policy_title = 'Store Policy'
+  assign policy_intro = 'Review the current policy details for Dekuch below.'
+  assign policy_highlight_1_label = 'Store support'
+  assign policy_highlight_1_value = response_time | strip
+  assign policy_highlight_2_label = 'Official channel'
+  assign policy_highlight_2_value = support_email | strip
+  assign policy_highlight_3_label = 'Coverage'
+  assign policy_highlight_3_value = 'United States storefront support'
+  assign policy_cover_1 = 'Official storefront policy'
+  assign policy_cover_2 = 'Business identity and support path'
+  assign policy_cover_3 = 'Current service expectations'
+  assign policy_usage_note = 'Use this page as the current reference for store operations, customer support, and policy interpretation.'
+  case policy_handle
+    when 'privacy-policy'
+      assign policy_title = 'Privacy Policy'
+      assign policy_intro = 'Learn how Dekuch collects, uses, stores, and protects personal information when you browse, place an order, or contact support.'
+      assign policy_highlight_1_label = 'Privacy requests'
+      assign policy_highlight_1_value = 'Access, deletion, correction, and opt-out support'
+      assign policy_highlight_2_label = 'Response window'
+      assign policy_highlight_2_value = 'Acknowledged in 10 business days'
+      assign policy_highlight_3_label = 'Coverage'
+      assign policy_highlight_3_value = 'Applies to browsing, orders, and support messages'
+      assign policy_cover_1 = 'What personal information we collect'
+      assign policy_cover_2 = 'How information is used and shared'
+      assign policy_cover_3 = 'How to submit privacy requests'
+      assign policy_usage_note = 'Use this page if you want to understand data handling, cookies, retention, or how to request access, correction, or deletion.'
+    when 'refund-policy'
+      assign policy_title = 'Refund Policy'
+      assign policy_intro = 'Review our return eligibility, refund timelines, and how to request support if an order is damaged, delayed, or not as expected.'
+      assign policy_highlight_1_label = 'Return window'
+      assign policy_highlight_1_value = '30 calendar days from delivery'
+      assign policy_highlight_2_label = 'Return method'
+      assign policy_highlight_2_value = 'Approval required before shipping back'
+      assign policy_highlight_3_label = 'Refund timing'
+      assign policy_highlight_3_value = 'Usually processed within 10 business days after approval'
+      assign policy_cover_1 = 'Who can request a return'
+      assign policy_cover_2 = 'How to start a return correctly'
+      assign policy_cover_3 = 'When refunds are processed'
+      assign policy_usage_note = 'Use this page before opening a return request so you know the approval process, timeline, and eligibility rules.'
+    when 'shipping-policy'
+      assign policy_title = 'Shipping Policy'
+      assign policy_intro = 'See how order processing, shipping timelines, delivery expectations, and address support are handled for Dekuch orders.'
+      assign policy_highlight_1_label = 'Processing time'
+      assign policy_highlight_1_value = 'Usually 1 to 3 business days'
+      assign policy_highlight_2_label = 'Delivery estimate'
+      assign policy_highlight_2_value = 'Most US orders arrive in 5 to 10 business days'
+      assign policy_highlight_3_label = 'Coverage'
+      assign policy_highlight_3_value = 'Ships within the United States'
+      assign policy_cover_1 = 'Processing and delivery timelines'
+      assign policy_cover_2 = 'Address and tracking support'
+      assign policy_cover_3 = 'Lost, delayed, or returned shipment rules'
+      assign policy_usage_note = 'Use this page if you need shipment expectations, address guidance, or help with a delayed or missing package.'
+    when 'terms-of-service'
+      assign policy_title = 'Terms of Service'
+      assign policy_intro = 'Read the rules, responsibilities, and service conditions that govern the use of Dekuch and our online storefront.'
+      assign policy_highlight_1_label = 'Website use'
+      assign policy_highlight_1_value = 'Applies to browsing, ordering, and account activity'
+      assign policy_highlight_2_label = 'Linked policies'
+      assign policy_highlight_2_value = 'Works together with Privacy, Refund, and Shipping policies'
+      assign policy_highlight_3_label = 'Business'
+      assign policy_highlight_3_value = company_name | strip
+      assign policy_cover_1 = 'Rules for using the storefront'
+      assign policy_cover_2 = 'Order, pricing, and payment conditions'
+      assign policy_cover_3 = 'Key legal limits and responsibilities'
+      assign policy_usage_note = 'Use this page as the core agreement for browsing, buying, and interacting with the Dekuch storefront.'
+    when 'contact-information'
+      assign is_contact_policy = true
+      assign policy_title = 'Contact Information'
+      assign policy_intro = 'Use this page as the official Dekuch support center for business details, customer service channels, privacy requests, returns, shipping questions, and legal notices.'
+      assign policy_highlight_1_label = 'Support email'
+      assign policy_highlight_1_value = support_email | strip
+      assign policy_highlight_2_label = 'WhatsApp'
+      assign policy_highlight_2_value = support_whatsapp | strip
+      assign policy_highlight_3_label = 'Typical response'
+      assign policy_highlight_3_value = response_time | strip
+      assign policy_cover_1 = 'Official support channels'
+      assign policy_cover_2 = 'Business and returns addresses'
+      assign policy_cover_3 = 'Which channel to use for each request'
+      assign policy_usage_note = 'Use this page as the official contact hub for order support, privacy requests, shipping questions, returns, and legal notices.'
+  endcase
+-%}
+
+<section class="main-policy-page{% if is_contact_policy %} main-policy-page--contact{% endif %} section-{{ section.id }}-padding">
+  <div class="page-width">
+    <div class="main-policy-page__shell">
+      <aside class="main-policy-page__sidebar" aria-label="Policy navigation">
+        <div class="main-policy-page__sidebar-card color-scheme-2">
+          <p class="main-policy-page__eyebrow">Help & Policies</p>
+          <h2 class="main-policy-page__sidebar-title">Policy center</h2>
+          <p class="main-policy-page__sidebar-copy">Quick access to privacy, returns, shipping, contact details, and store terms.</p>
+          <nav class="main-policy-page__nav">
+            <a class="main-policy-page__nav-link{% if policy_handle == 'privacy-policy' %} is-active{% endif %}" href="/policies/privacy-policy">Privacy Policy</a>
+            <a class="main-policy-page__nav-link{% if policy_handle == 'refund-policy' %} is-active{% endif %}" href="/policies/refund-policy">Refund Policy</a>
+            <a class="main-policy-page__nav-link{% if policy_handle == 'contact-information' %} is-active{% endif %}" href="/policies/contact-information">Contact Information</a>
+            <a class="main-policy-page__nav-link{% if policy_handle == 'shipping-policy' %} is-active{% endif %}" href="/policies/shipping-policy">Shipping Policy</a>
+            <a class="main-policy-page__nav-link{% if policy_handle == 'terms-of-service' %} is-active{% endif %}" href="/policies/terms-of-service">Terms of Service</a>
+          </nav>
+          <div class="main-policy-page__toc" data-policy-toc hidden>
+            <h3>On this page</h3>
+            <div class="main-policy-page__toc-links" data-policy-toc-links></div>
+          </div>
+          <div class="main-policy-page__support">
+            <h3>Need help?</h3>
+            <p>For order support or policy questions, contact the Dekuch support team.</p>
+            <p><strong>Email:</strong> <a href="mailto:{{ support_email | strip }}">{{ support_email | strip }}</a></p>
+            <p><strong>WhatsApp:</strong> <a href="tel:+17752999669">{{ support_whatsapp | strip }}</a></p>
+            <p><strong>Response time:</strong> {{ response_time | strip }}</p>
+          </div>
+        </div>
+      </aside>
+
+      <div class="main-policy-page__content">
+        <header class="main-policy-page__hero">
+          <div class="main-policy-page__hero-grid">
+            <div class="main-policy-page__hero-main">
+              <p class="main-policy-page__eyebrow">Store policy</p>
+              <h1 class="main-policy-page__title">{{ policy_title }}</h1>
+              <p class="main-policy-page__intro">{{ policy_intro }}</p>
+              <div class="main-policy-page__meta">
+                <span>Official {{ storefront_name | strip }} policy page</span>
+                <span>Business: {{ company_name | strip }}</span>
+                <span>Updated {{ policy_last_updated | strip }}</span>
+              </div>
+              <div class="main-policy-page__hero-actions">
+                <a class="main-policy-page__hero-button main-policy-page__hero-button--primary" href="mailto:{{ support_email | strip }}">Email support</a>
+                <a class="main-policy-page__hero-button main-policy-page__hero-button--secondary" href="/collections/all">Continue shopping</a>
+              </div>
+              <div class="main-policy-page__highlights">
+                <div class="main-policy-page__highlight">
+                  <span>{{ policy_highlight_1_label }}</span>
+                  <strong>{{ policy_highlight_1_value }}</strong>
+                </div>
+                <div class="main-policy-page__highlight">
+                  <span>{{ policy_highlight_2_label }}</span>
+                  <strong>{{ policy_highlight_2_value }}</strong>
+                </div>
+                <div class="main-policy-page__highlight">
+                  <span>{{ policy_highlight_3_label }}</span>
+                  <strong>{{ policy_highlight_3_value }}</strong>
+                </div>
+              </div>
+            </div>
+            <div class="main-policy-page__hero-aside">
+              <p class="main-policy-page__aside-eyebrow">Need another policy?</p>
+              <div class="main-policy-page__policy-switcher">
+                <a href="/policies/privacy-policy"{% if policy_handle == 'privacy-policy' %} aria-current="page"{% endif %}>Privacy</a>
+                <a href="/policies/refund-policy"{% if policy_handle == 'refund-policy' %} aria-current="page"{% endif %}>Refunds</a>
+                <a href="/policies/contact-information"{% if policy_handle == 'contact-information' %} aria-current="page"{% endif %}>Contact</a>
+                <a href="/policies/shipping-policy"{% if policy_handle == 'shipping-policy' %} aria-current="page"{% endif %}>Shipping</a>
+                <a href="/policies/terms-of-service"{% if policy_handle == 'terms-of-service' %} aria-current="page"{% endif %}>Terms</a>
+              </div>
+              <div class="main-policy-page__hero-summary">
+                <strong>Policy support</strong>
+                <p>Questions about this policy, a return, or a privacy request? Our support team can help.</p>
+                <p><a href="mailto:{{ support_email | strip }}">{{ support_email | strip }}</a></p>
+              </div>
+            </div>
+          </div>
+          <div class="main-policy-page__identity">
+            <div class="main-policy-page__identity-card">
+              <p class="main-policy-page__identity-label">Legal business</p>
+              <p class="main-policy-page__identity-value">{{ company_name | strip }}</p>
+            </div>
+            <div class="main-policy-page__identity-card">
+              <p class="main-policy-page__identity-label">Support email</p>
+              <p class="main-policy-page__identity-value"><a href="mailto:{{ support_email | strip }}">{{ support_email | strip }}</a></p>
+            </div>
+            <div class="main-policy-page__identity-card">
+              <p class="main-policy-page__identity-label">Business address</p>
+              <p class="main-policy-page__identity-value">{{ business_address | strip }}</p>
+            </div>
+            <div class="main-policy-page__identity-card">
+              <p class="main-policy-page__identity-label">Returns address</p>
+              <p class="main-policy-page__identity-value">{{ return_address | strip }}</p>
+            </div>
+            <div class="main-policy-page__identity-card">
+              <p class="main-policy-page__identity-label">Support response time</p>
+              <p class="main-policy-page__identity-value">{{ response_time | strip }}</p>
+            </div>
+          </div>
+        </header>
+
+        <section class="main-policy-page__overview" aria-label="Policy overview">
+          <article class="main-policy-page__overview-card">
+            <p class="main-policy-page__overview-eyebrow">At a glance</p>
+            <h2 class="main-policy-page__overview-title">What this page covers</h2>
+            <ul class="main-policy-page__overview-list">
+              <li>{{ policy_cover_1 }}</li>
+              <li>{{ policy_cover_2 }}</li>
+              <li>{{ policy_cover_3 }}</li>
+            </ul>
+          </article>
+          <article class="main-policy-page__overview-card">
+            <p class="main-policy-page__overview-eyebrow">How to use it</p>
+            <h2 class="main-policy-page__overview-title">Quick guidance</h2>
+            <p class="main-policy-page__overview-copy">{{ policy_usage_note }}</p>
+            <div class="main-policy-page__overview-actions">
+              <a class="main-policy-page__overview-button" href="mailto:{{ support_email | strip }}">Ask support</a>
+              <a class="main-policy-page__overview-button main-policy-page__overview-button--light" href="/collections/all">Continue shopping</a>
+            </div>
+          </article>
+        </section>
+
+        <div class="main-policy-page__article rte" data-policy-content>
+          {%- if policy_body_text != blank -%}
+            {{ policy_body }}
+          {%- else -%}
+            <div class="main-policy-page__empty-state" role="status">
+              <h2>Policy content is being updated</h2>
+              <p>This policy page is temporarily unavailable. Please contact the Dekuch support team for the latest details.</p>
+              <p><strong>Email:</strong> {{ support_email | strip }}</p>
+              <p><strong>WhatsApp:</strong> {{ support_whatsapp | strip }}</p>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<script>
+  (function() {
+    function buildPolicyToc() {
+      var article = document.querySelector('[data-policy-content]');
+      var toc = document.querySelector('[data-policy-toc]');
+      var tocLinks = document.querySelector('[data-policy-toc-links]');
+
+      if (!article || !toc || !tocLinks) return;
+
+      var headings = article.querySelectorAll('h2, h3');
+      if (!headings.length) return;
+
+      var fragment = document.createDocumentFragment();
+
+      headings.forEach(function(heading, index) {
+        var text = (heading.textContent || '').trim();
+        if (!text) return;
+
+        if (!heading.id) {
+          heading.id = 'policy-section-' + (index + 1);
+        }
+
+        var link = document.createElement('a');
+        link.href = '#' + heading.id;
+        link.textContent = text;
+        fragment.appendChild(link);
+      });
+
+      if (!fragment.childNodes.length) return;
+
+      tocLinks.textContent = '';
+      tocLinks.appendChild(fragment);
+      toc.hidden = false;
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', buildPolicyToc);
+    } else {
+      buildPolicyToc();
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Main Policy",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 72
+    }
+  ]
+}
+{% endschema %}

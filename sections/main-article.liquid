@@ -1,0 +1,606 @@
+{{ 'section-blog-post.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign is_trending_now_article = false
+  if blog.handle == 'trending-now'
+    assign is_trending_now_article = true
+  endif
+
+  assign article_plain_text = article.content | strip_html
+  assign article_words = article_plain_text | split: ' ' | size
+  assign article_read_time = article_words | divided_by: 180
+  if article_read_time < 1
+    assign article_read_time = 1
+  endif
+
+  assign article_summary = article.excerpt
+  if article_summary == blank
+    assign article_summary = article.content | strip_html | truncatewords: 34
+  endif
+
+  assign recommended_collection = collections['all']
+  assign sidebar_product_limit = 3
+  assign bottom_product_limit = 4
+-%}
+
+<article class="article-template">
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when '@app' -%}
+        <div class="page-width{% if is_trending_now_article %} dekuch-article__page-width{% else %} page-width--narrow{% endif %}">
+          {% render block %}
+        </div>
+      {%- when 'featured_image' -%}
+        {%- if article.image and is_trending_now_article == false -%}
+          <div
+            class="article-template__hero-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            <div
+              class="article-template__hero-{{ block.settings.image_height }} media"
+              {% if block.settings.image_height == 'adapt' and article.image %}
+                style="padding-bottom: {{ 1 | divided_by: article.image.aspect_ratio | times: 100 }}%;"
+              {% endif %}
+            >
+              <img
+                srcset="
+                  {% if article.image.width >= 350 %}{{ article.image | image_url: width: 350 }} 350w,{% endif %}
+                  {% if article.image.width >= 750 %}{{ article.image | image_url: width: 750 }} 750w,{% endif %}
+                  {% if article.image.width >= 1100 %}{{ article.image | image_url: width: 1100 }} 1100w,{% endif %}
+                  {% if article.image.width >= 1500 %}{{ article.image | image_url: width: 1500 }} 1500w,{% endif %}
+                  {% if article.image.width >= 2200 %}{{ article.image | image_url: width: 2200 }} 2200w,{% endif %}
+                  {% if article.image.width >= 3000 %}{{ article.image | image_url: width: 3000 }} 3000w,{% endif %}
+                  {{ article.image | image_url }} {{ article.image.width }}w
+                "
+                sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 }}px, (min-width: 750px) calc(100vw - 10rem), 100vw"
+                src="{{ article.image | image_url: width: 1100 }}"
+                loading="eager"
+                fetchpriority="high"
+                width="{{ article.image.width }}"
+                height="{{ article.image.height }}"
+                alt="{{ article.image.alt | escape }}"
+              >
+            </div>
+          </div>
+        {%- endif -%}
+
+      {%- when 'title' -%}
+        <header
+          class="page-width{% if is_trending_now_article %} dekuch-article__page-width dekuch-article__header{% else %} page-width--narrow{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          {%- if is_trending_now_article -%}
+            <p class="dekuch-article__eyebrow">Trending Now</p>
+          {%- endif -%}
+          <h1
+            class="article-template__title{% if is_trending_now_article %} dekuch-article__title{% endif %}"
+          >
+            {{ article.title | escape }}
+          </h1>
+          {%- if is_trending_now_article and article_summary != blank -%}
+            <p class="dekuch-article__summary">{{ article_summary | strip_html }}</p>
+          {%- endif -%}
+          <div class="{% if is_trending_now_article %}dekuch-article__meta{% endif %}">
+            {%- if block.settings.blog_show_date -%}
+              <span class="circle-divider caption-with-letter-spacing">
+                {{- article.published_at | time_tag: format: 'date' -}}
+              </span>
+            {%- endif -%}
+            {%- if block.settings.blog_show_author -%}
+              <span class="caption-with-letter-spacing">
+                <span>{{ article.author }}</span>
+              </span>
+            {%- endif -%}
+            {%- if is_trending_now_article -%}
+              <span class="caption-with-letter-spacing">{{ article_read_time }} min read</span>
+              <span class="caption-with-letter-spacing">{{ blog.title | escape }}</span>
+            {%- endif -%}
+          </div>
+          {%- if is_trending_now_article and article.tags.size > 0 -%}
+            <div class="dekuch-article__tags">
+              {%- for tag in article.tags limit: 5 -%}
+                <a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </header>
+
+      {%- when 'content' -%}
+        {%- if is_trending_now_article -%}
+          <div
+            class="page-width dekuch-article__page-width dekuch-article__layout-shell{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            <aside class="dekuch-article__rail" aria-label="Article quick links and product picks">
+              <div class="dekuch-article__rail-card dekuch-article__rail-card--posts">
+                <h2>Read next</h2>
+                <p>Jump quickly to other stories from the same channel.</p>
+                <div class="dekuch-article__rail-links">
+                  {%- assign linked_posts = 0 -%}
+                  {%- for related_article in blog.articles -%}
+                    {%- if related_article.handle != article.handle and linked_posts < 4 -%}
+                      <a href="{{ related_article.url }}">
+                        <span class="dekuch-article__rail-link-thumb">
+                          {%- if related_article.image -%}
+                            <img
+                              src="{{ related_article.image | image_url: width: 220 }}"
+                              alt="{{ related_article.image.alt | default: related_article.title | escape }}"
+                              loading="lazy"
+                              width="{{ related_article.image.width }}"
+                              height="{{ related_article.image.height }}"
+                            >
+                          {%- else -%}
+                            <span class="dekuch-article__rail-link-thumb-fallback">{{ linked_posts | plus: 1 }}</span>
+                          {%- endif -%}
+                        </span>
+                        <span class="dekuch-article__rail-link-copy">
+                          <span class="dekuch-article__rail-link-title">{{ related_article.title | escape }}</span>
+                          <span class="dekuch-article__rail-link-meta">
+                            {{ related_article.published_at | date: '%b %d, %Y' }}
+                          </span>
+                        </span>
+                      </a>
+                      {%- assign linked_posts = linked_posts | plus: 1 -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              </div>
+
+              <div class="dekuch-article__rail-card dekuch-article__rail-card--products">
+                <h2>Shop related picks</h2>
+                <p>Popular products that fit the same high-interest browsing flow.</p>
+                <div class="dekuch-article__mini-products">
+                  {%- assign sidebar_products_rendered = 0 -%}
+                  {%- for recommendation_product in recommended_collection.products -%}
+                    {%- if sidebar_products_rendered < sidebar_product_limit -%}
+                      <article class="dekuch-article__mini-product">
+                        <a class="dekuch-article__mini-product-image" href="{{ recommendation_product.url }}">
+                          {%- if recommendation_product.featured_media -%}
+                            <img
+                              src="{{ recommendation_product.featured_media | image_url: width: 320 }}"
+                              alt="{{ recommendation_product.featured_media.alt | escape }}"
+                              loading="lazy"
+                              width="{{ recommendation_product.featured_media.width }}"
+                              height="{{ recommendation_product.featured_media.height }}"
+                            >
+                          {%- endif -%}
+                        </a>
+                        <div class="dekuch-article__mini-product-body">
+                          <a class="dekuch-article__mini-product-title" href="{{ recommendation_product.url }}">
+                            {{ recommendation_product.title | escape }}
+                          </a>
+                          <div class="dekuch-article__mini-product-price">
+                            {% render 'price', product: recommendation_product, price_class: '', show_compare_at_price: true %}
+                          </div>
+                        </div>
+                      </article>
+                      {%- assign sidebar_products_rendered = sidebar_products_rendered | plus: 1 -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              </div>
+            </aside>
+
+            <div
+              class="article-template__content dekuch-article__content-shell rte"
+            >
+              {{ article.content }}
+            </div>
+          </div>
+        {%- else -%}
+          <div
+            class="article-template__content page-width page-width--narrow rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            {{ article.content }}
+          </div>
+        {%- endif -%}
+
+      {%- when 'share' -%}
+        <div
+          class="article-template__social-sharing page-width{% if is_trending_now_article %} dekuch-article__page-width dekuch-article__share-shell{% else %} page-width--narrow{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          {% assign share_url = request.origin | append: article.url %}
+          {% render 'share-button', block: block, share_link: share_url %}
+        </div>
+    {%- endcase -%}
+  {%- endfor -%}
+
+  <div class="article-template__back element-margin-top center{% if is_trending_now_article %} dekuch-article__back-shell{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <a href="{{ blog.url }}" class="article-template__link link animate-arrow">
+      <span class="icon-wrap">
+        <span class="svg-wrapper">
+          {{- 'icon-arrow.svg' | inline_asset_content -}}
+        </span>
+      </span>
+      {{ 'blogs.article.back_to_blog' | t: title: blog.title | escape }}
+    </a>
+  </div>
+  {%- if is_trending_now_article -%}
+    <div class="page-width dekuch-article__page-width dekuch-article__bottom-recommendations{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <div class="dekuch-article__bottom-head">
+        <div>
+          <p class="dekuch-article__bottom-eyebrow">Recommended products</p>
+          <h2>Continue from this story into products</h2>
+        </div>
+        <a href="{{ routes.all_products_collection_url }}">Shop all products</a>
+      </div>
+      <div class="dekuch-article__bottom-grid">
+        {%- assign bottom_products_rendered = 0 -%}
+        {%- for bottom_product in recommended_collection.products -%}
+          {%- if bottom_products_rendered < bottom_product_limit -%}
+            <article class="dekuch-article__story-product">
+              <a class="dekuch-article__story-product-image" href="{{ bottom_product.url }}">
+                {%- if bottom_product.featured_media -%}
+                  <img
+                    srcset="
+                      {%- if bottom_product.featured_media.width >= 320 -%}{{ bottom_product.featured_media | image_url: width: 320 }} 320w,{%- endif -%}
+                      {%- if bottom_product.featured_media.width >= 520 -%}{{ bottom_product.featured_media | image_url: width: 520 }} 520w,{%- endif -%}
+                      {%- if bottom_product.featured_media.width >= 720 -%}{{ bottom_product.featured_media | image_url: width: 720 }} 720w,{%- endif -%}
+                      {{ bottom_product.featured_media | image_url }} {{ bottom_product.featured_media.width }}w
+                    "
+                    src="{{ bottom_product.featured_media | image_url: width: 520 }}"
+                    alt="{{ bottom_product.featured_media.alt | escape }}"
+                    loading="lazy"
+                    width="{{ bottom_product.featured_media.width }}"
+                    height="{{ bottom_product.featured_media.height }}"
+                  >
+                {%- endif -%}
+              </a>
+              <div class="dekuch-article__story-product-body">
+                <a class="dekuch-article__story-product-title" href="{{ bottom_product.url }}">
+                  {{ bottom_product.title | escape }}
+                </a>
+                <div class="dekuch-article__story-product-price">
+                  {% render 'price', product: bottom_product, price_class: '', show_compare_at_price: true %}
+                </div>
+                <a class="dekuch-article__story-product-button" href="{{ bottom_product.url }}">
+                  {% if bottom_product.has_only_default_variant %}
+                    Add to cart
+                  {% else %}
+                    Choose options
+                  {% endif %}
+                </a>
+              </div>
+            </article>
+            {%- assign bottom_products_rendered = bottom_products_rendered | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+  {%- if blog.comments_enabled? -%}
+    <div class="article-template__comment-wrapper{% if is_trending_now_article %} dekuch-article__comment-wrapper{% else %} background-secondary{% endif %}">
+      <div
+        id="comments"
+        class="page-width{% if is_trending_now_article %} dekuch-article__page-width dekuch-article__comments-shell{% else %} page-width--narrow{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+      >
+        {%- if article.comments_count > 0 -%}
+          {%- assign anchorId = '#Comments-' | append: article.id -%}
+
+          <h2 id="Comments-{{ article.id }}" tabindex="-1">
+            {{ 'blogs.article.comments' | t: count: article.comments_count }}
+          </h2>
+          {% paginate article.comments by 5 %}
+            <div class="article-template__comments">
+              {%- if comment.status == 'pending' and comment.content -%}
+                <article id="{{ comment.id }}" class="article-template__comments-comment">
+                  {{ comment.content }}
+                  <footer class="right">
+                    <span class="circle-divider caption-with-letter-spacing">{{ comment.author }}</span>
+                  </footer>
+                </article>
+              {%- endif -%}
+
+              {%- for comment in article.comments -%}
+                <article id="{{ comment.id }}" class="article-template__comments-comment">
+                  {{ comment.content }}
+                  <footer class="right">
+                    <span class="circle-divider caption-with-letter-spacing">{{ comment.author }}</span
+                    ><span class="caption-with-letter-spacing">
+                      {{- comment.created_at | time_tag: format: 'date' -}}
+                    </span>
+                  </footer>
+                </article>
+              {%- endfor -%}
+              {% render 'pagination', paginate: paginate, anchor: anchorId %}
+            </div>
+          {% endpaginate %}
+        {%- endif -%}
+        {% form 'new_comment', article %}
+          {%- liquid
+            assign post_message = 'blogs.article.success'
+            if blog.moderated? and comment.status == 'unapproved'
+              assign post_message = 'blogs.article.success_moderated'
+            endif
+          -%}
+          <h2>{{ 'blogs.article.comment_form_title' | t }}</h2>
+          {%- if form.errors -%}
+            <div class="form__message" role="alert">
+              <h3 class="form-status caption-large text-body" tabindex="-1" autofocus>
+                <span class="svg-wrapper">
+                  {{- 'icon-error.svg' | inline_asset_content -}}
+                </span>
+                {{ 'templates.contact.form.error_heading' | t }}
+              </h3>
+            </div>
+            <ul class="form-status-list caption-large">
+              {%- for field in form.errors -%}
+                <li>
+                  <a href="#CommentForm-{{ field }}" class="link">
+                    {%- if form.errors.translated_fields[field] contains 'author' -%}
+                      {{ 'blogs.article.name' | t }}
+                    {%- elsif form.errors.translated_fields[field] contains 'body' -%}
+                      {{ 'blogs.article.message' | t }}
+                    {%- else -%}
+                      {{ form.errors.translated_fields[field] }}
+                    {%- endif -%}
+                    {{ form.errors.messages[field] }}
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- elsif form.posted_successfully? -%}
+            <div class="form-status-list form__message" role="status">
+              <h3 class="form-status" tabindex="-1" autofocus>
+                <span class="svg-wrapper">
+                  {{- 'icon-success.svg' | inline_asset_content -}}
+                </span>
+                {{ post_message | t }}
+              </h3>
+            </div>
+          {%- endif -%}
+
+          <div
+            {% if blog.moderated? == false %}
+              class="article-template__comments-fields"
+            {% endif %}
+          >
+            <div class="article-template__comment-fields">
+              <div class="field field--with-error">
+                <input
+                  type="text"
+                  name="comment[author]"
+                  id="CommentForm-author"
+                  class="field__input"
+                  autocomplete="name"
+                  value="{{ form.author }}"
+                  aria-required="true"
+                  required
+                  {% if form.errors contains 'author' %}
+                    aria-invalid="true"
+                    aria-describedby="CommentForm-author-error"
+                  {% endif %}
+                  placeholder="{{ 'blogs.article.name' | t }}"
+                >
+                <label class="field__label" for="CommentForm-author">
+                  {{- 'blogs.article.name' | t }}
+                  <span aria-hidden="true">*</span></label
+                >
+                {%- if form.errors contains 'author' -%}
+                  <small id="CommentForm-author-error">
+                    <span class="form__message">
+                      <span class="svg-wrapper">
+                        {{- 'icon-error.svg' | inline_asset_content -}}
+                      </span>
+                      {{- 'blogs.article.name' | t }}
+                      {{ form.errors.messages.author }}.</span
+                    >
+                  </small>
+                {%- endif -%}
+              </div>
+              <div class="field field--with-error">
+                <input
+                  type="email"
+                  name="comment[email]"
+                  id="CommentForm-email"
+                  autocomplete="email"
+                  class="field__input"
+                  value="{{ form.email }}"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  aria-required="true"
+                  required
+                  {% if form.errors contains 'email' %}
+                    aria-invalid="true"
+                    aria-describedby="CommentForm-email-error"
+                  {% endif %}
+                  placeholder="{{ 'blogs.article.email' | t }}"
+                >
+                <label class="field__label" for="CommentForm-email">
+                  {{- 'blogs.article.email' | t }}
+                  <span aria-hidden="true">*</span></label
+                >
+                {%- if form.errors contains 'email' -%}
+                  <small id="CommentForm-email-error">
+                    <span class="form__message">
+                      <span class="svg-wrapper">
+                        {{- 'icon-error.svg' | inline_asset_content -}}
+                      </span>
+                      {{- 'blogs.article.email' | t }}
+                      {{ form.errors.messages.email }}.</span
+                    >
+                  </small>
+                {%- endif -%}
+              </div>
+            </div>
+            <div class="field field--with-error">
+              <textarea
+                rows="5"
+                name="comment[body]"
+                id="CommentForm-body"
+                class="text-area field__input"
+                aria-required="true"
+                required
+                {% if form.errors contains 'body' %}
+                  aria-invalid="true"
+                  aria-describedby="CommentForm-body-error"
+                {% endif %}
+                placeholder="{{ 'blogs.article.message' | t }}"
+              >{{ form.body }}</textarea>
+              <label class="form__label field__label" for="CommentForm-body">
+                {{- 'blogs.article.message' | t }}
+                <span aria-hidden="true">*</span></label
+              >
+            </div>
+            {%- if form.errors contains 'body' -%}
+              <small id="CommentForm-body-error">
+                <span class="form__message">
+                  <span class="svg-wrapper">
+                    {{- 'icon-error.svg' | inline_asset_content -}}
+                  </span>
+                  {{- 'blogs.article.message' | t }}
+                  {{ form.errors.messages.body }}.</span
+                >
+              </small>
+            {%- endif -%}
+          </div>
+          {%- if blog.moderated? -%}
+            <p class="article-template__comment-warning caption">{{ 'blogs.article.moderated' | t }}</p>
+          {%- endif -%}
+          <input type="submit" class="button" value="{{ 'blogs.article.post' | t }}">
+        {% endform %}
+      </div>
+    </div>
+  {%- endif -%}
+</article>
+
+{%- if is_trending_now_article -%}
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var articleShell = document.querySelector('.dekuch-article__content-shell');
+      if (!articleShell) return;
+
+      var suspiciousPatterns = [
+        '"@context"',
+        '"@type": "BlogPosting"',
+        '"headline"',
+        '"datePublished"',
+        '"publisher"',
+        'https://schema.org'
+      ];
+
+      var candidateSelectors = [
+        'p',
+        'li',
+        'div',
+        'article',
+        'section',
+        'blockquote',
+        'pre',
+        'code'
+      ];
+
+      articleShell.querySelectorAll(candidateSelectors.join(',')).forEach(function (node) {
+        var text = (node.textContent || '').replace(/\s+/g, ' ').trim();
+        if (!text) return;
+
+        var isSchemaDump = suspiciousPatterns.some(function (pattern) {
+          return text.indexOf(pattern) !== -1;
+        });
+
+        if (isSchemaDump && text.length > 120) {
+          var container = node.closest('.rte > div, .rte > article, .rte > section, .rte > ul, .rte > ol');
+          if (container && container !== articleShell) {
+            container.remove();
+          } else {
+            node.remove();
+          }
+        }
+      });
+
+      articleShell.querySelectorAll('.rte > div, .rte > article, .rte > section').forEach(function (block) {
+        var remainingText = (block.textContent || '').replace(/\s+/g, ' ').trim();
+        if (!remainingText && !block.querySelector('img, iframe, video, table, ul, ol, blockquote')) {
+          block.remove();
+        }
+      });
+    });
+  </script>
+{%- endif -%}
+
+<script type="application/ld+json">
+  {{ article | structured_data }}
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.main-article.name",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "featured_image",
+      "name": "t:sections.main-article.blocks.featured_image.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "image_height",
+          "options": [
+            {
+              "value": "adapt",
+              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__1.label"
+            },
+            {
+              "value": "small",
+              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__2.label"
+            },
+            {
+              "value": "medium",
+              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__3.label"
+            },
+            {
+              "value": "large",
+              "label": "t:sections.main-article.blocks.featured_image.settings.image_height.options__4.label"
+            }
+          ],
+          "default": "adapt",
+          "label": "t:sections.main-article.blocks.featured_image.settings.image_height.label"
+        }
+      ]
+    },
+    {
+      "type": "title",
+      "name": "t:sections.main-article.blocks.title.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "blog_show_date",
+          "default": true,
+          "label": "t:sections.main-article.blocks.title.settings.blog_show_date.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "blog_show_author",
+          "default": false,
+          "label": "t:sections.main-article.blocks.title.settings.blog_show_author.label"
+        }
+      ]
+    },
+    {
+      "type": "content",
+      "name": "t:sections.main-article.blocks.content.name",
+      "limit": 1
+    },
+    {
+      "type": "share",
+      "name": "t:sections.main-article.blocks.share.name",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "text",
+          "id": "share_label",
+          "label": "t:sections.main-article.blocks.share.settings.text.label",
+          "default": "t:sections.main-article.blocks.share.settings.text.default"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
