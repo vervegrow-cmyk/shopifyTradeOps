@@ -50,6 +50,7 @@
     render 'store-policy-url', policy: 'terms-of-service', fallback: '/policies/terms-of-service'
   endcapture
   assign continue_shopping_url = routes.all_products_collection_url
+  assign policy_last_updated_text = policy_last_updated | strip
 
   assign policy_body_text = policy_body | strip_html | strip
   assign is_contact_policy = false
@@ -147,8 +148,8 @@
           <div class="main-policy-page__meta">
             <span>Official {{ storefront_name | strip }} policy page</span>
             <span>Business: {{ company_name | strip }}</span>
-            {%- if policy_last_updated | strip != blank -%}
-              <span>Updated {{ policy_last_updated | strip }}</span>
+            {%- if policy_last_updated_text != blank -%}
+              <span>Updated {{ policy_last_updated_text }}</span>
             {%- endif -%}
           </div>
           <div class="main-policy-page__hero-actions">
