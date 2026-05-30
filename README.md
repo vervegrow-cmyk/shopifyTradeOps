@@ -36,15 +36,15 @@ If GitHub push fails, the script reports the failure, continues to Shopify live 
 
 - `git` must be installed
 - Shopify CLI must be installed and logged into the target store
-- GitHub remote target: `https://github.com/vervegrow-cmyk/shopifyTradeOps.git`
+- GitHub authentication is recommended for `origin`, but it is not required to publish to Shopify live
 
-Optional GitHub remote check:
+Optional GitHub access check:
 
 ```powershell
 git ls-remote origin
 ```
 
-If GitHub sync is temporarily unavailable, the publish flow will still continue to Shopify live and you can push the commit/tag later.
+If GitHub access is unavailable, the publish flow will still continue to Shopify live and you can push the commit/tag later.
 
 ## Rollback flow
 
