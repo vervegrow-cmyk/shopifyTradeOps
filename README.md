@@ -1,32 +1,42 @@
-# Theme Governance — 使用说明
+# Theme Governance
 
-目标：对 `Trade` 主题（ID: 18561882552）实行可回溯治理。每次修改都要生成一个 Git 提交并自动打标签，必要时可回滚至任一标签。
+这个仓库用于维护 Shopify live 主题 `Trade`，并要求每次批准的代码修改都同步到以下两个目标：
 
-放置位置：仓库根目录（本地主题目录）。
+1. Shopify live theme `#185618825522`
+2. GitHub 仓库 `vervegrow-cmyk/shopifyTradeOps`
 
-主要脚本：
+## 默认发布规则
 
-- `scripts/commit_tag_push.ps1` — 提交改动并创建时间戳标签；可选上传到 Shopify。
-- `scripts/rollback_to_tag.ps1` — 从指定标签创建恢复分支，可选推送到 Shopify。
+- 代码修改完成后，默认直接执行同步，不需要再单独询问是否发布。
+- 标准目标是 `GitHub + Shopify live` 双同步。
+- 如果 GitHub 临时不可用，允许先完成 Shopify live 发布，但 GitHub 必须在恢复后尽快补同步，直到两端一致。
+- 本地只改不发，不算完成。
 
-示例：提交并打标签（同时推送到 Shopify）：
+## 标准发布命令
 
 ```powershell
 cd "d:\\桌面文件下载\\shopify Theme 20260529"
-.\scripts\commit_tag_push.ps1 -Message "Fix header spacing" -PushTheme
+.\scripts\commit_tag_push.ps1 -Message "Describe the change"
 ```
 
-示例：回滚到某个标签并推送到 Shopify：
+发布脚本默认执行以下顺序：
+
+1. `git add -A`
+2. 创建 Git commit
+3. 创建时间戳 tag
+4. 推送 commit 到 GitHub
+5. 推送 tag 到 GitHub
+6. 执行 `shopify theme check`
+7. 推送到 Shopify live
+
+## 回滚命令
 
 ```powershell
-cd "d:\\桌面文件下载\\shopify Theme 20260529"
 .\scripts\rollback_to_tag.ps1 -Tag v20260529-143000 -PushTheme
 ```
 
-注意：
+## 说明
 
-- 推荐先在本地或临时分支测试回滚结果，再决定是否用 `-PushTheme` 将该版本部署到线上。
-- 如果尚未配置远程仓库，请运行 `git remote add origin <your-repo-url>` 并推送初始提交。
-- 本脚本使用时间戳作为标签名：`vYYYYMMDDHHMMSS`。
-
-如需我为你配置远程仓库并推送初始提交，请授权并提供仓库地址。
+- GitHub 远程地址：`https://github.com/vervegrow-cmyk/shopifyTradeOps.git`
+- Store：`4ea863-98.myshopify.com`
+- Tag 格式：`vYYYYMMDD-HHMMSS`
