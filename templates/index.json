@@ -147,7 +147,7 @@
         "category_bar_text": {
           "type": "text",
           "settings": {
-            "text": "<p><a href=\"/collections/all\">All deals</a> <a href=\"/collections/all\">Home</a> <a href=\"/collections/all\">Kitchen</a> <a href=\"/collections/all\">Lighting</a> <a href=\"/collections/all\">Storage</a> <a href=\"/collections/all\">Gadgets</a> <a href=\"/collections/all\">Seasonal picks</a></p>"
+            "text": "<p><a href=\"/collections/all\">All deals</a> <a href=\"/pages/about-us-dekuch-1\">About us</a> <a href=\"/blogs/news\">Blog</a> <a href=\"/policies/shipping-policy\">Shipping</a> <a href=\"/policies/refund-policy\">Returns</a> <a href=\"/policies/privacy-policy\">Privacy</a> <a href=\"/policies/contact-information\">Support</a></p>"
           }
         }
       },
@@ -310,37 +310,37 @@
         "column11": {
           "type": "column",
           "settings": {
-            "title": "Email support",
-            "text": "<p>support@dekuch.com</p>",
-            "link_label": "",
-            "link": ""
+            "title": "Policy center",
+            "text": "<p>Review privacy, shipping, refund, and contact details from the official storefront policy pages.</p>",
+            "link_label": "Open policies",
+            "link": "/policies/contact-information"
           }
         },
         "column12": {
           "type": "column",
           "settings": {
-            "title": "WhatsApp",
-            "text": "<p>+1 775 299 9669</p>",
-            "link_label": "",
-            "link": ""
+            "title": "Support channels",
+            "text": "<p>Email and WhatsApp support remain available before and after checkout with a published response window.</p>",
+            "link_label": "Contact support",
+            "link": "/policies/contact-information"
           }
         },
         "column13": {
           "type": "column",
           "settings": {
-            "title": "Business address",
-            "text": "<p>402 Foulk Rd, Apt 4C0, Wilmington, DE 19803, USA</p>",
-            "link_label": "",
-            "link": ""
+            "title": "Business identity",
+            "text": "<p>Storefront, company, and return details are aligned across the footer and support pages for easier verification.</p>",
+            "link_label": "View business details",
+            "link": "/policies/contact-information"
           }
         },
         "column14": {
           "type": "column",
           "settings": {
-            "title": "Returns address",
-            "text": "<p>9020 Murphy Rd, Woodridge, IL 60517, USA</p>",
-            "link_label": "",
-            "link": ""
+            "title": "Checkout confidence",
+            "text": "<p>Browse with clearer support expectations, cleaner policy access, and visible store identity throughout the storefront.</p>",
+            "link_label": "Read refund policy",
+            "link": "/policies/refund-policy"
           }
         }
       },
