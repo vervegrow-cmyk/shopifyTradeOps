@@ -452,22 +452,23 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 22rem;
-  min-height: 5.2rem;
-  padding-inline: 3.2rem;
-  font-size: 1.6rem;
+  min-width: 24rem;
+  min-height: 5rem;
+  padding-inline: 3rem;
+  font-size: 1.55rem;
   font-weight: 800;
-  letter-spacing: 0.01em;
-  background: linear-gradient(180deg, #ffbf40 0%, #f4a51c 100%);
-  border-color: #f4a51c;
-  color: #15171f;
-  box-shadow: 0 1.6rem 3.2rem rgba(244, 165, 28, 0.26);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #1f2937 0%, #111827 100%);
+  border-color: rgba(244, 165, 28, 0.52);
+  color: #f8fafc;
+  box-shadow: 0 1.6rem 3.2rem rgba(15, 23, 42, 0.2);
 }
 
 .template-index .featured-collection .collection__view-all .button:hover {
-  background: linear-gradient(180deg, #ffc95a 0%, #f7ad2f 100%);
-  border-color: #f7ad2f;
-  color: #111827;
+  background: linear-gradient(180deg, #2b3647 0%, #182130 100%);
+  border-color: rgba(255, 211, 102, 0.9);
+  color: #ffffff;
   transform: translateY(-0.1rem);
 }
 
@@ -477,6 +478,12 @@
 
 .template-index .featured-collection .collection__view-all .button::before {
   box-shadow: 0 1.4rem 3rem rgba(15, 23, 42, 0.18);
+}
+
+.template-index .featured-collection .collection__view-all .button::after {
+  box-shadow:
+    0 0 0 0.1rem rgba(255, 204, 92, 0.52),
+    inset 0 0 0 0.1rem rgba(255, 255, 255, 0.06);
 }
 
 .template-index .featured-collection .collection__view-all .button::after {
