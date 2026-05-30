@@ -1,72 +1,47 @@
 param(
-  [Parameter(Mandatory = $true)]
-  [string]$Message,
-  [string]$ThemeId = "185618825522",
+  [string]$Message = "Update theme",
+  [string]$ThemeId = "18561882552",
   [string]$Store = "4ea863-98.myshopify.com",
-  [switch]$SkipGitHubPush,
-  [switch]$SkipShopifyPush
+  [switch]$PushTheme
 )
 
-$ErrorActionPreference = "Stop"
-
-function Invoke-Step {
-  param(
-    [Parameter(Mandatory = $true)]
-    [string]$Label,
-    [Parameter(Mandatory = $true)]
-    [scriptblock]$Action
-  )
-
-  Write-Host "==> $Label" -ForegroundColor Cyan
-  & $Action
-}
-
+# Ensure we're in a git repo
 if (-not (Test-Path ".git")) {
-  throw "This folder is not a Git repository."
+  git init
+  git config user.name "theme-admin"
+  git config user.email "theme@local"
+  git add -A
+  git commit -m "chore: initial commit"
 }
 
-$statusBefore = git status --porcelain
-if (-not $statusBefore) {
-  Write-Host "No changes to publish."
+# Stage changes
+git add -A
+
+# Check for changes
+$changes = git status --porcelain
+if (-not $changes) {
+  Write-Host "No changes to commit."
   exit 0
 }
 
-Invoke-Step -Label "Stage changes" -Action {
-  git add -A
-}
+# Commit
+git commit -m $Message
 
-Invoke-Step -Label "Create commit" -Action {
-  git commit -m $Message
-}
-
+# Create timestamped tag
 $tag = "v$(Get-Date -Format yyyyMMdd-HHmmss)"
-Invoke-Step -Label "Create tag $tag" -Action {
-  git tag -a $tag -m $Message
+git tag -a $tag -m "$Message"
+
+# Push commits and tags if remote exists
+try {
+  git push origin --follow-tags
+} catch {
+  Write-Host "Warning: failed to push to origin. Configure remote if needed." -ForegroundColor Yellow
 }
 
-if (-not $SkipGitHubPush) {
-  Invoke-Step -Label "Push commit to GitHub" -Action {
-    git push origin HEAD
-  }
-
-  Invoke-Step -Label "Push tag to GitHub" -Action {
-    git push origin $tag
-  }
-} else {
-  Write-Host "Skipping GitHub push by request." -ForegroundColor Yellow
+# Optionally push theme to Shopify
+if ($PushTheme) {
+  Write-Host "Pushing theme to Shopify..."
+  shopify theme push --theme=$ThemeId --store=$Store
 }
 
-if (-not $SkipShopifyPush) {
-  Invoke-Step -Label "Run Shopify theme check" -Action {
-    shopify theme check
-  }
-
-  Invoke-Step -Label "Push to Shopify live theme" -Action {
-    shopify theme push --theme=$ThemeId --store=$Store --live --allow-live
-  }
-} else {
-  Write-Host "Skipping Shopify live push by request." -ForegroundColor Yellow
-}
-
-Write-Host "Publish flow completed. Commit message: $Message" -ForegroundColor Green
-Write-Host "Release tag: $tag" -ForegroundColor Green
+Write-Host "Committed and tagged as $tag"

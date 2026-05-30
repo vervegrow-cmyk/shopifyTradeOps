@@ -1,60 +1,32 @@
-# Theme Governance
+# Theme Governance — 使用说明
 
-This repository is governed as a release-tracked Shopify theme workspace for the live `Trade` theme.
+目标：对 `Trade` 主题（ID: 18561882552）实行可回溯治理。每次修改都要生成一个 Git 提交并自动打标签，必要时可回滚至任一标签。
 
-## Required release rule
+放置位置：仓库根目录（本地主题目录）。
 
-Every approved code change must be published to both destinations:
+主要脚本：
 
-1. Shopify live theme
-2. GitHub repository `vervegrow-cmyk/shopifyTradeOps`
+- `scripts/commit_tag_push.ps1` — 提交改动并创建时间戳标签；可选上传到 Shopify。
+- `scripts/rollback_to_tag.ps1` — 从指定标签创建恢复分支，可选推送到 Shopify。
 
-Local-only edits are not considered complete.
-
-## Standard publish flow
-
-From the repo root:
+示例：提交并打标签（同时推送到 Shopify）：
 
 ```powershell
-cd "d:\桌面文件下载\shopify Theme 20260529"
-.\scripts\commit_tag_push.ps1 -Message "Describe the change"
+cd "d:\\桌面文件下载\\shopify Theme 20260529"
+.\scripts\commit_tag_push.ps1 -Message "Fix header spacing" -PushTheme
 ```
 
-The publish script now enforces this order:
-
-1. stage the working tree
-2. create a Git commit
-3. create a timestamp tag
-4. push commit and tag to GitHub
-5. run `shopify theme check`
-6. push to Shopify live theme
-
-If GitHub push fails, the Shopify live push is not attempted.
-
-## Prerequisites
-
-- `git` must be installed
-- Shopify CLI must be installed and logged into the target store
-- GitHub authentication must already work for `origin`
-
-Verify GitHub access:
+示例：回滚到某个标签并推送到 Shopify：
 
 ```powershell
-git push origin main
-```
-
-If you see `Permission denied (publickey)`, add the machine SSH public key to the GitHub account or repo access before publishing.
-
-## Rollback flow
-
-To restore a tagged version locally and optionally publish it again:
-
-```powershell
+cd "d:\\桌面文件下载\\shopify Theme 20260529"
 .\scripts\rollback_to_tag.ps1 -Tag v20260529-143000 -PushTheme
 ```
 
-## Notes
+注意：
 
-- Live theme id: `185618825522`
-- Store: `4ea863-98.myshopify.com`
-- Tags use format `vYYYYMMDD-HHMMSS`
+- 推荐先在本地或临时分支测试回滚结果，再决定是否用 `-PushTheme` 将该版本部署到线上。
+- 如果尚未配置远程仓库，请运行 `git remote add origin <your-repo-url>` 并推送初始提交。
+- 本脚本使用时间戳作为标签名：`vYYYYMMDDHHMMSS`。
+
+如需我为你配置远程仓库并推送初始提交，请授权并提供仓库地址。
