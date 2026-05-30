@@ -3075,6 +3075,38 @@
   padding-bottom: 1.8rem;
   color: #f8fafc;
   letter-spacing: 0.08em;
+  font-size: 1.15rem;
+  line-height: 1.2;
+  vertical-align: middle;
+}
+
+.template-cart .cart-items thead th:first-child {
+  padding-left: 2.6rem;
+}
+
+.template-cart .cart-items thead th:last-child {
+  padding-right: 2.8rem;
+}
+
+.template-cart .cart-items .cart-items__heading--quantity {
+  width: 19rem;
+  min-width: 19rem;
+  text-align: center;
+}
+
+.template-cart .cart-items .cart-item__quantity {
+  width: 19rem;
+  min-width: 19rem;
+}
+
+.template-cart .cart-items .cart-item__totals {
+  width: 15rem;
+  min-width: 15rem;
+  padding-right: 2.8rem;
+}
+
+.template-cart .cart-items .cart-item__totals.right {
+  text-align: right;
 }
 
 .template-cart .cart-items td,
@@ -3089,6 +3121,7 @@
 .template-cart .cart-item__details {
   padding-top: 2rem;
   padding-bottom: 2rem;
+  padding-right: 2.4rem;
 }
 
 .template-cart .cart-item__image-container {
@@ -3133,6 +3166,19 @@
   font-size: 1.9rem;
   font-weight: 800;
   color: #111827;
+}
+
+@media screen and (max-width: 989px) {
+  .template-cart .cart-items thead th:first-child,
+  .template-cart .cart-items thead th:last-child,
+  .template-cart .cart-items .cart-item__totals {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .template-cart .cart-item__details {
+    padding-right: 1.2rem;
+  }
 }
 
 .template-cart .cart__footer {
