@@ -51,7 +51,7 @@
     assign fetch_priority = 'high'
   endif
 
-  if template.name == 'index' and section.settings.image == blank and section.settings.image_2 == blank
+  if section.settings.image == blank and section.settings.image_2 == blank
     assign use_home_fallback_image = true
   endif
 -%}
