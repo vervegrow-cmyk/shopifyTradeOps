@@ -91,11 +91,12 @@
     <div class="banner__media media{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
       {%- if use_home_fallback_image -%}
         <img
-          src="{{ 'dekuch-home-hero.jpg' | asset_url }}"
-          alt="Bright modern home interior with clean furniture styling"
-          width="2000"
-          height="1125"
+          src="{{ 'home-hero-living-room.png' | asset_url }}"
+          alt="Warm living room scene with sofa, coffee table, and floor lamp"
+          width="1810"
+          height="869"
           loading="eager"
+          decoding="async"
           fetchpriority="{{ fetch_priority }}"
         >
       {%- else -%}

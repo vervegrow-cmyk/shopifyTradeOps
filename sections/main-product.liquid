@@ -73,6 +73,8 @@
   {%- endif -%}
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
+  {%- capture support_response_time -%}{% render 'store-contact-meta', field: 'response_time' %}{%- endcapture -%}
+  {%- capture shipping_policy_url -%}{% render 'store-policy-url', policy: 'shipping-policy', fallback: '/policies/shipping-policy' %}{%- endcapture -%}
   <div class="page-width dekuch-product-page">
     <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
       <div class="grid__item product__media-wrapper">
@@ -92,7 +94,7 @@
           </div>
 
           <div class="dekuch-product__microbadges" aria-label="Shopping benefits">
-            <span>Free US shipping on eligible orders</span>
+            <span>See shipping policy for current delivery expectations</span>
             <span>US-based returns support</span>
             <span>Secure checkout</span>
           </div>
@@ -509,17 +511,17 @@
           <h2>Specifications, policies, and extra support</h2>
           <p>Expandable sections for features, materials, shipping, and post-purchase information.</p>
         </div>
-        <div class="dekuch-product__config-note-grid">
-          <div class="dekuch-product__config-note">
-            <strong>Shipping</strong>
-            <span>Free US shipping on eligible orders.</span>
-          </div>
-          <div class="dekuch-product__config-note">
-            <strong>Support</strong>
-            <span>Reach us at {% render 'store-contact-meta', field: 'support_email' %} within 24 business hours.</span>
-          </div>
-          <div class="dekuch-product__config-note">
-            <strong>Returns</strong>
+          <div class="dekuch-product__config-note-grid">
+            <div class="dekuch-product__config-note">
+              <strong>Shipping</strong>
+              <span><a href="{{ shipping_policy_url | strip }}">Review shipping timelines and delivery details.</a></span>
+            </div>
+            <div class="dekuch-product__config-note">
+              <strong>Support</strong>
+              <span>Reach us at {% render 'store-contact-meta', field: 'support_email' %} and we usually reply {{ support_response_time | strip | downcase }}.</span>
+            </div>
+            <div class="dekuch-product__config-note">
+              <strong>Returns</strong>
             <span>US returns address: {% render 'store-contact-meta', field: 'return_address' %}</span>
           </div>
         </div>
@@ -611,14 +613,6 @@
       </script>
       <script src="{{ 'product-model.js' | asset_url }}" defer></script>
     {%- endif -%}
-
-    {%- liquid
-      if product.selected_or_first_available_variant.featured_media
-        assign seo_media = product.selected_or_first_available_variant.featured_media
-      else
-        assign seo_media = product.featured_media
-      endif
-    -%}
 
     <script type="application/ld+json">
       {{ product | structured_data }}

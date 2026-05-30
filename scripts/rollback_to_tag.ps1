@@ -1,6 +1,6 @@
 param(
   [string]$Tag,
-  [string]$ThemeId = "18561882552",
+  [string]$ThemeId = "185618825522",
   [string]$Store = "4ea863-98.myshopify.com",
   [switch]$PushTheme
 )
@@ -21,7 +21,8 @@ Write-Host "Working tree now at tag $Tag on branch $branch. Review changes and t
 
 if ($PushTheme) {
   Write-Host "Pushing this version to Shopify theme $ThemeId..."
-  shopify theme push --theme=$ThemeId --store=$Store
+  shopify theme check
+  shopify theme push --theme=$ThemeId --store=$Store --live --allow-live
 }
 
 Write-Host "Rollback to $Tag completed locally."

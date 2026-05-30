@@ -14,32 +14,16 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "support_text": {
-          "type": "text",
-          "settings": {
-            "heading": "Customer Support",
-            "subtext": "<p><strong>Order help and customer care</strong></p><p>Reach our team for shipping updates, returns, product questions, or privacy requests before and after checkout.</p><p><strong>Email</strong><br><a href=\"mailto:support@dekuch.com\">support@dekuch.com</a></p><p><strong>WhatsApp</strong><br><a href=\"https://wa.me/17752999669\">+1 775 299 9669</a></p><p><strong>Response time</strong><br>Usually within 24 business hours</p>"
-          }
-        },
         "policy_links": {
           "type": "link_list",
           "settings": {
             "heading": "Help & Policies",
             "menu": "support"
           }
-        },
-        "business_text": {
-          "type": "text",
-          "settings": {
-            "heading": "Business Details",
-            "subtext": "<p><strong>Storefront</strong><br>Dekuch</p><p><strong>Company</strong><br>GOLE GOLDIE LLC</p><p><strong>Business address</strong><br>402 Foulk Rd, Apt 4C0, Wilmington, DE 19803, USA</p><p><strong>US returns address</strong><br>9020 Murphy Rd, Woodridge, IL 60517, USA</p><p><strong>Checkout promise</strong><br>Secure checkout with PayPal, Shop Pay, Visa, Mastercard, and free US shipping on eligible orders.</p>"
-          }
         }
       },
       "block_order": [
-        "support_text",
-        "policy_links",
-        "business_text"
+        "policy_links"
       ],
       "settings": {
         "color_scheme": "scheme-4",

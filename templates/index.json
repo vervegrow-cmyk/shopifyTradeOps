@@ -87,14 +87,14 @@
             "title": "Free shipping",
             "text": "<p>Free standard shipping on eligible US orders with clear delivery expectations.</p>",
             "link_label": "Shipping policy",
-            "link": ""
+            "link": "/policies/shipping-policy"
           }
         },
         "column2": {
           "type": "column",
           "settings": {
             "title": "Fast support",
-            "text": "<p>Reach support@dekuch.com and usually hear back within 24 business hours.</p>",
+            "text": "<p>Use our official contact page for order help, privacy requests, delivery questions, and return support.</p>",
             "link_label": "Contact information",
             "link": "/policies/contact-information"
           }
@@ -147,7 +147,7 @@
         "category_bar_text": {
           "type": "text",
           "settings": {
-            "text": "<p><a href=\"/collections/all\">All deals</a> <a href=\"/collections/all\">Home</a> <a href=\"/collections/all\">Kitchen</a> <a href=\"/collections/all\">Lighting</a> <a href=\"/collections/all\">Storage</a> <a href=\"/collections/all\">Gadgets</a> <a href=\"/collections/all\">Seasonal picks</a></p>"
+            "text": "<p><a href=\"/collections/all\">Browse all current deals</a></p>"
           }
         }
       },
@@ -303,69 +303,6 @@
         "padding_top": 0,
         "padding_bottom": 36
       }
-    },
-    "multicolumn2": {
-      "type": "multicolumn",
-      "blocks": {
-        "column11": {
-          "type": "column",
-          "settings": {
-            "title": "Email support",
-            "text": "<p>support@dekuch.com</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column12": {
-          "type": "column",
-          "settings": {
-            "title": "WhatsApp",
-            "text": "<p>+1 775 299 9669</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column13": {
-          "type": "column",
-          "settings": {
-            "title": "Business address",
-            "text": "<p>402 Foulk Rd, Apt 4C0, Wilmington, DE 19803, USA</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column14": {
-          "type": "column",
-          "settings": {
-            "title": "Returns address",
-            "text": "<p>9020 Murphy Rd, Woodridge, IL 60517, USA</p>",
-            "link_label": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "column11",
-        "column12",
-        "column13",
-        "column14"
-      ],
-      "settings": {
-        "title": "Official business details",
-        "heading_size": "h2",
-        "image_width": "third",
-        "image_ratio": "adapt",
-        "columns_desktop": 4,
-        "column_alignment": "left",
-        "background_style": "primary",
-        "button_label": "",
-        "button_link": "",
-        "color_scheme": "scheme-3",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 44,
-        "padding_bottom": 56
-      }
     }
   },
   "order": [
@@ -376,7 +313,6 @@
     "rich_text",
     "featured_collection1",
     "multicolumn1",
-    "featured_collection2",
-    "multicolumn2"
+    "featured_collection2"
   ]
 }
