@@ -3,6 +3,13 @@ Usage examples (PowerShell):
 # Publish to both GitHub and Shopify live
 .\commit_tag_push.ps1 -Message "Release hero update"
 
+# Publish to Shopify live even if GitHub push is currently unavailable
+.\commit_tag_push.ps1 -Message "Live publish with deferred GitHub sync"
+
+# Governance note
+# Every approved change must end up in both GitHub and Shopify live.
+# If GitHub is temporarily unavailable, publish to Shopify live first and backfill GitHub afterward.
+
 # Commit/tag only, skip GitHub push
 .\commit_tag_push.ps1 -Message "Local checkpoint" -SkipGitHubPush
 

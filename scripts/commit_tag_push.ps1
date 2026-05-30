@@ -8,6 +8,7 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+$script:HadGitHubPushFailure = $false
 
 function Invoke-Step {
   param(
@@ -19,6 +20,22 @@ function Invoke-Step {
 
   Write-Host "==> $Label" -ForegroundColor Cyan
   & $Action
+}
+
+function Invoke-OptionalGitHubStep {
+  param(
+    [Parameter(Mandatory = $true)]
+    [string]$Label,
+    [Parameter(Mandatory = $true)]
+    [scriptblock]$Action
+  )
+
+  Write-Host "==> $Label" -ForegroundColor Cyan
+  & $Action
+  if ($LASTEXITCODE -ne 0) {
+    $script:HadGitHubPushFailure = $true
+    Write-Host "GitHub step failed and will be skipped for the rest of this run, but Shopify live publish will continue." -ForegroundColor Yellow
+  }
 }
 
 if (-not (Test-Path ".git")) {
@@ -45,12 +62,16 @@ Invoke-Step -Label "Create tag $tag" -Action {
 }
 
 if (-not $SkipGitHubPush) {
-  Invoke-Step -Label "Push commit to GitHub" -Action {
+  Invoke-OptionalGitHubStep -Label "Push commit to GitHub" -Action {
     git push origin HEAD
   }
 
-  Invoke-Step -Label "Push tag to GitHub" -Action {
-    git push origin $tag
+  if (-not $HadGitHubPushFailure) {
+    Invoke-OptionalGitHubStep -Label "Push tag to GitHub" -Action {
+      git push origin $tag
+    }
+  } else {
+    Write-Host "Skipping tag push because commit push to GitHub failed." -ForegroundColor Yellow
   }
 } else {
   Write-Host "Skipping GitHub push by request." -ForegroundColor Yellow
@@ -70,3 +91,6 @@ if (-not $SkipShopifyPush) {
 
 Write-Host "Publish flow completed. Commit message: $Message" -ForegroundColor Green
 Write-Host "Release tag: $tag" -ForegroundColor Green
+if ($HadGitHubPushFailure) {
+  Write-Host "Shopify live publish completed, but GitHub push did not succeed in this run." -ForegroundColor Yellow
+}

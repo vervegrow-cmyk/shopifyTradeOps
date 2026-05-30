@@ -10,6 +10,7 @@ Every approved code change must be published to both destinations:
 2. GitHub repository `vervegrow-cmyk/shopifyTradeOps`
 
 Local-only edits are not considered complete.
+If either destination fails during a release, the missing sync must be completed as soon as access is restored so that GitHub and Shopify live return to the same code state.
 
 ## Standard publish flow
 
@@ -29,21 +30,21 @@ The publish script now enforces this order:
 5. run `shopify theme check`
 6. push to Shopify live theme
 
-If GitHub push fails, the Shopify live push is not attempted.
+If GitHub push fails, the script reports the failure, continues to Shopify live publish, and GitHub must be backfilled afterward so both destinations match.
 
 ## Prerequisites
 
 - `git` must be installed
 - Shopify CLI must be installed and logged into the target store
-- GitHub authentication must already work for `origin`
+- GitHub authentication is recommended for `origin`, but it is not required to publish to Shopify live
 
-Verify GitHub access:
+Optional GitHub access check:
 
 ```powershell
-git push origin main
+git ls-remote origin
 ```
 
-If you see `Permission denied (publickey)`, add the machine SSH public key to the GitHub account or repo access before publishing.
+If GitHub access is unavailable, the publish flow will still continue to Shopify live and you can push the commit/tag later.
 
 ## Rollback flow
 
